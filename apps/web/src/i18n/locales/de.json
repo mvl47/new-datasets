@@ -1,0 +1,57 @@
+{
+  "app": {
+    "title": "FfE Geodatenplattform",
+    "search": "Gemeinde oder PLZ suchen",
+    "layers": "Layer",
+    "export": "Export",
+    "theme": {
+      "light": "Hell",
+      "dark": "Dunkel"
+    },
+    "lang": {
+      "current": "DE",
+      "switch": "EN"
+    }
+  },
+  "sidebar": {
+    "datasets": "Datensätze",
+    "filters": "Filter",
+    "legend": "Legende",
+    "placeholder": "Platzhalter — wird in Phase 1+ befüllt."
+  },
+  "panel": {
+    "title": "Details",
+    "collapse": "Einklappen",
+    "expand": "Ausklappen",
+    "placeholder": "Datensatzspezifisches Panel (Diagramm/Tabelle) erscheint hier in Phase 1+."
+  },
+  "view": {
+    "datasetName": "Datensatz",
+    "vizType": "Visualisierungstyp",
+    "phase0Notice": "PHASE 0 — Platzhalter. Echte Layer und Daten folgen in den nächsten Phasen."
+  },
+  "viz": {
+    "points": "Punktkarte",
+    "choropleth": "Choroplethenkarte",
+    "polygons": "Polygon-Karte",
+    "raster": "Rasterkarte",
+    "timeseries": "Zeitreihe + Karte"
+  },
+  "datasets": {
+    "mastrClean": "Aufbereitete Marktstammdaten",
+    "consumptionIndustry": "Stromverbrauch Industrie je WZ",
+    "consumptionGhd": "Stromverbrauch GHD",
+    "consumptionPhh": "Stromverbrauch Privathaushalte",
+    "potentialPvGround": "Freiflächenpotenzial Photovoltaik",
+    "potentialWindOnshore": "Flächenpotenzial Wind onshore",
+    "potentialWindOffshore": "Flächenpotenzial Wind offshore",
+    "timeseriesPv": "Erzeugungszeitreihen PV",
+    "timeseriesWind": "Erzeugungszeitreihen Wind",
+    "population": "Bevölkerungsentwicklung",
+    "weather": "Wetterdaten"
+  },
+  "notFound": {
+    "title": "Datensatz nicht gefunden",
+    "message": "Der angeforderte Datensatz existiert nicht."
+  }
+}

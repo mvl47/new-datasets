@@ -1,0 +1,57 @@
+{
+  "app": {
+    "title": "FfE Geodata Platform",
+    "search": "Search municipality or postcode",
+    "layers": "Layers",
+    "export": "Export",
+    "theme": {
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "lang": {
+      "current": "EN",
+      "switch": "DE"
+    }
+  },
+  "sidebar": {
+    "datasets": "Datasets",
+    "filters": "Filters",
+    "legend": "Legend",
+    "placeholder": "Placeholder — populated in PHASE 1+."
+  },
+  "panel": {
+    "title": "Details",
+    "collapse": "Collapse",
+    "expand": "Expand",
+    "placeholder": "Dataset-specific panel (chart/table) appears here in PHASE 1+."
+  },
+  "view": {
+    "datasetName": "Dataset",
+    "vizType": "Visualization type",
+    "phase0Notice": "PHASE 0 — placeholder. Real layers and data ship in later phases."
+  },
+  "viz": {
+    "points": "Point map",
+    "choropleth": "Choropleth",
+    "polygons": "Polygon map",
+    "raster": "Raster map",
+    "timeseries": "Time series + map"
+  },
+  "datasets": {
+    "mastrClean": "Cleaned MaStR",
+    "consumptionIndustry": "Industrial electricity demand by WZ",
+    "consumptionGhd": "Commercial / services electricity demand",
+    "consumptionPhh": "Household electricity demand",
+    "potentialPvGround": "Ground-mounted PV potential",
+    "potentialWindOnshore": "Onshore wind potential",
+    "potentialWindOffshore": "Offshore wind potential",
+    "timeseriesPv": "PV generation time series",
+    "timeseriesWind": "Wind generation time series",
+    "population": "Population development",
+    "weather": "Weather data"
+  },
+  "notFound": {
+    "title": "Dataset not found",
+    "message": "The requested dataset does not exist."
+  }
+}

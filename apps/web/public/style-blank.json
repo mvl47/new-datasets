@@ -1,0 +1,15 @@
+{
+  "version": 8,
+  "name": "blank-fallback",
+  "metadata": {
+    "description": "Self-contained MapLibre style with no external tile dependencies. Useful for offline dev, automated screenshots, or any environment where the OpenFreeMap default is unreachable. Replace with a PMTiles-backed style for production."
+  },
+  "sources": {},
+  "layers": [
+    {
+      "id": "land",
+      "type": "background",
+      "paint": { "background-color": "#e7eef4" }
+    }
+  ]
+}
