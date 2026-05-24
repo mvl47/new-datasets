@@ -65,6 +65,16 @@
     "I": "Gastgewerbe",
     "M": "Freiberufliche Dienstleistungen"
   },
+  "tsPv": {
+    "description": "Synthetisches 8760-h-Erzeugungsprofil PV — Karte zeigt Bundesländer zur gewählten Stunde, Diagramm den nationalen Tagesverlauf.",
+    "hour": "Stunde im Jahr",
+    "nowNational": "Aktuell DE",
+    "peak": "Jahres-Peak",
+    "nationalProfile": "Nationaler Verlauf",
+    "annual": "Top-3 Jahresertrag",
+    "legendTitle": "Erzeugung je Land",
+    "mockNotice": "Synthetisches Profil (Klarhimmel + Wolken-Noise) — die Pipeline liefert ERA5-basierte Profile."
+  },
   "windOff": {
     "description": "Offshore-Windpotenzial in deutscher AWZ — Heatmap der mittleren Windgeschwindigkeit, Bestands- und geplante Parks als Punkte.",
     "operational": "In Betrieb",

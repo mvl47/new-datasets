@@ -16,6 +16,7 @@ import ConsumptionPhhView from './views/ConsumptionPhhView';
 import PotentialPvGroundView from './views/PotentialPvGroundView';
 import PotentialWindOnshoreView from './views/PotentialWindOnshoreView';
 import PotentialWindOffshoreView from './views/PotentialWindOffshoreView';
+import TimeseriesPvView from './views/TimeseriesPvView';
 
 const VIEWS: Partial<Record<DatasetSlug, ComponentType>> = {
   'mastr-clean': MastrCleanView,
@@ -25,6 +26,7 @@ const VIEWS: Partial<Record<DatasetSlug, ComponentType>> = {
   'potential-pv-ground': PotentialPvGroundView,
   'potential-wind-onshore': PotentialWindOnshoreView,
   'potential-wind-offshore': PotentialWindOffshoreView,
+  'timeseries-pv': TimeseriesPvView,
 };
 
 function PlaceholderView({ meta }: { meta: DatasetMeta }) {

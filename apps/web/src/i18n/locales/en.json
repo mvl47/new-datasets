@@ -65,6 +65,16 @@
     "I": "Hospitality",
     "M": "Professional services"
   },
+  "tsPv": {
+    "description": "Synthetic 8760-h PV generation profile — choropleth at the selected hour, chart shows national progression.",
+    "hour": "Hour of year",
+    "nowNational": "Now (national)",
+    "peak": "Annual peak",
+    "nationalProfile": "National profile",
+    "annual": "Top 3 annual yield",
+    "legendTitle": "Generation per Bundesland",
+    "mockNotice": "Synthetic profile (clear-sky + cloud noise) — the pipeline ships ERA5-based profiles."
+  },
   "windOff": {
     "description": "Offshore wind potential in the German EEZ — mean wind heatmap; existing and planned parks as points.",
     "operational": "Operational",
