@@ -7,6 +7,7 @@ import MapView from './components/Map';
 import { useThemeStore } from './state/themeStore';
 import { hydrateAppStateFromHash, installUrlSync } from './state/urlSync';
 import { loadBoundaries } from './data/loadBoundaries';
+import { loadPopulation } from './data/loadPopulation';
 import './i18n';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
 
   useEffect(() => {
     void loadBoundaries();
+    void loadPopulation();
   }, []);
 
   return (

@@ -17,6 +17,7 @@ import {
 import { useAppStore } from '../../state/appStore';
 import { useLayersStore } from '../../state/layersStore';
 import { useBoundariesStore } from '../../state/boundariesStore';
+import { usePopulationStore } from '../../state/populationStore';
 import {
   DIVERGING_RED_BLUE_STOPS,
   makeDivergingScale,
@@ -42,11 +43,17 @@ function PopulationView() {
   const time = useAppStore((s) => s.time);
   const setTime = useAppStore((s) => s.setTime);
 
-  const yearCandidate = typeof time === 'number' ? Math.round(time) : POPULATION_LAST_YEAR - 5;
-  const year = Math.max(POPULATION_FIRST_YEAR, Math.min(POPULATION_LAST_YEAR, yearCandidate));
   const boundaryOverrides = useBoundariesStore((s) => s.overrides);
+  const populationStatus = usePopulationStore((s) => s.status);
 
-  const data = useMemo(() => getPopulation(), []);
+  // populationStatus is in deps so getPopulation() re-resolves when the real artifact lands
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const data = useMemo(() => getPopulation(), [populationStatus]);
+  const firstYear = data.years[0] ?? POPULATION_FIRST_YEAR;
+  const lastYear = data.years[data.years.length - 1] ?? POPULATION_LAST_YEAR;
+  const yearCandidate = typeof time === 'number' ? Math.round(time) : Math.max(firstYear, lastYear - 5);
+  const year = Math.max(firstYear, Math.min(lastYear, yearCandidate));
+
   const growth = useMemo(() => growthVsBaseline(data, year), [data, year]);
   const populations = useMemo(() => populationAt(data, year), [data, year]);
   const national = useMemo(() => nationalSeries(data), [data]);
@@ -113,7 +120,7 @@ function PopulationView() {
     () => ({
       animation: false,
       grid: { left: 40, right: 16, top: 10, bottom: 24 },
-      xAxis: { type: 'value', min: POPULATION_FIRST_YEAR, max: POPULATION_LAST_YEAR, axisLabel: { fontSize: 10, formatter: (v: number) => String(Math.round(v)) } },
+      xAxis: { type: 'value', min: firstYear, max: lastYear, axisLabel: { fontSize: 10, formatter: (v: number) => String(Math.round(v)) } },
       yAxis: {
         type: 'value',
         name: 'Mio.',
@@ -142,7 +149,7 @@ function PopulationView() {
         },
       ],
     }),
-    [nationalSeriesPoints, year, locale],
+    [nationalSeriesPoints, year, locale, firstYear, lastYear],
   );
 
   return (
@@ -161,16 +168,16 @@ function PopulationView() {
           </div>
           <input
             type="range"
-            min={POPULATION_FIRST_YEAR}
-            max={POPULATION_LAST_YEAR}
+            min={firstYear}
+            max={lastYear}
             step={1}
             value={year}
             onChange={(e) => setTime(Number(e.target.value))}
             className="mt-1 h-1.5 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-blue-500 dark:bg-slate-700"
           />
           <div className="mt-1 flex justify-between text-[10px] text-slate-500 dark:text-slate-400">
-            <span>{POPULATION_FIRST_YEAR}</span>
-            <span>{POPULATION_LAST_YEAR}</span>
+            <span>{firstYear}</span>
+            <span>{lastYear}</span>
           </div>
         </label>
 
@@ -231,7 +238,9 @@ function PopulationView() {
         </div>
 
         <p className="mt-3 text-[10px] italic text-slate-400 dark:text-slate-500">
-          {t('population.mockNotice')}
+          {populationStatus === 'loaded'
+            ? t('population.realNotice')
+            : t('population.mockNotice')}
         </p>
       </div>
       <ColorScaleLegend

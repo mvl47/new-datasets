@@ -43,17 +43,23 @@ const ANNUAL_GROWTH_RATE: Record<BundeslandCode, number> = {
 
 export interface PopulationData {
   years: ReadonlyArray<number>;
-  byBundesland: Record<BundeslandCode, ReadonlyArray<number>>;
+  byBundesland: Partial<Record<BundeslandCode, ReadonlyArray<number>>>;
   baselineYear: number;
 }
 
 let cached: PopulationData | null = null;
+let override: PopulationData | null = null;
+
+export function setPopulationOverride(data: PopulationData | null): void {
+  override = data;
+}
 
 export function getPopulation(): PopulationData {
+  if (override) return override;
   if (cached) return cached;
   const years: number[] = [];
   for (let y = POPULATION_FIRST_YEAR; y <= POPULATION_LAST_YEAR; y++) years.push(y);
-  const byBundesland = {} as Record<BundeslandCode, ReadonlyArray<number>>;
+  const byBundesland: Partial<Record<BundeslandCode, ReadonlyArray<number>>> = {};
   for (const b of BUNDESLAENDER) {
     const series: number[] = [];
     const base = POPULATION_2010_K[b.code];
@@ -68,8 +74,9 @@ export function getPopulation(): PopulationData {
 }
 
 export function indexForYear(data: PopulationData, year: number): number {
+  const lastYear = data.years[data.years.length - 1] ?? data.baselineYear;
   if (year <= data.baselineYear) return 0;
-  if (year >= POPULATION_LAST_YEAR) return data.years.length - 1;
+  if (year >= lastYear) return data.years.length - 1;
   return year - data.baselineYear;
 }
 
@@ -81,6 +88,10 @@ export function growthVsBaseline(
   const m = new Map<BundeslandCode, number>();
   for (const b of BUNDESLAENDER) {
     const series = data.byBundesland[b.code];
+    if (!series) {
+      m.set(b.code, 0);
+      continue;
+    }
     const value = series[idx];
     const baseline = series[0];
     if (value == null || baseline == null || baseline === 0) {
@@ -100,7 +111,7 @@ export function populationAt(
   const m = new Map<BundeslandCode, number>();
   for (const b of BUNDESLAENDER) {
     const series = data.byBundesland[b.code];
-    m.set(b.code, series[idx] ?? 0);
+    m.set(b.code, series?.[idx] ?? 0);
   }
   return m;
 }
@@ -108,7 +119,7 @@ export function populationAt(
 export function nationalSeries(data: PopulationData): ReadonlyArray<number> {
   return data.years.map((_, idx) => {
     let sum = 0;
-    for (const b of BUNDESLAENDER) sum += data.byBundesland[b.code][idx] ?? 0;
+    for (const b of BUNDESLAENDER) sum += data.byBundesland[b.code]?.[idx] ?? 0;
     return sum;
   });
 }

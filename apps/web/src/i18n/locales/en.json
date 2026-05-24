@@ -88,7 +88,8 @@
     "fastestGrowth": "Fastest growth",
     "fastestDecline": "Fastest decline",
     "legendTitle": "Growth vs 2010",
-    "mockNotice": "Simplified trends (Destatis-consistent 2010-2030 rates) — the pipeline uses official population data."
+    "mockNotice": "Simplified trends (Destatis-consistent 2010-2030 rates) — the pipeline uses official population data.",
+    "realNotice": "Source: Destatis GENESIS-Online — population statistics (live)."
   },
   "tsWind": {
     "description": "8760-h wind generation profile — onshore/offshore toggle; choropleth at selected hour, chart shows the progression.",

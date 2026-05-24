@@ -14,13 +14,13 @@ describe('population', () => {
     const data = getPopulation();
     expect(data.years[0]).toBe(POPULATION_FIRST_YEAR);
     expect(data.years[data.years.length - 1]).toBe(POPULATION_LAST_YEAR);
-    expect(data.byBundesland.BY.length).toBe(data.years.length);
+    expect(data.byBundesland.BY?.length).toBe(data.years.length);
   });
 
   it('baseline values match 2010 Destatis-aligned input', () => {
     const data = getPopulation();
-    expect(data.byBundesland.BY[0]).toBe(12541);
-    expect(data.byBundesland.NW[0]).toBe(17841);
+    expect(data.byBundesland.BY?.[0]).toBe(12541);
+    expect(data.byBundesland.NW?.[0]).toBe(17841);
   });
 
   it('east-German states see net decline by 2030', () => {

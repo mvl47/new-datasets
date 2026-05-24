@@ -88,7 +88,8 @@
     "fastestGrowth": "Stärkstes Wachstum",
     "fastestDecline": "Stärkster Rückgang",
     "legendTitle": "Wachstum gegenüber 2010",
-    "mockNotice": "Vereinfachte Trends (Destatis-konsistente Raten 2010-2030) — die Pipeline nutzt amtliche Bevölkerungsfortschreibung."
+    "mockNotice": "Vereinfachte Trends (Destatis-konsistente Raten 2010-2030) — die Pipeline nutzt amtliche Bevölkerungsfortschreibung.",
+    "realNotice": "Quelle: Destatis GENESIS-Online — Bevölkerungsfortschreibung (live geladen)."
   },
   "tsWind": {
     "description": "8760-h-Erzeugungsprofil Wind — Toggle Onshore/Offshore; Karte zur gewählten Stunde, Diagramm zeigt den Verlauf.",
