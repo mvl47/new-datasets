@@ -65,6 +65,22 @@
     "I": "Hospitality",
     "M": "Professional services"
   },
+  "windOff": {
+    "description": "Offshore wind potential in the German EEZ — mean wind heatmap; existing and planned parks as points.",
+    "operational": "Operational",
+    "planned": "Planned",
+    "legend": {
+      "operational": "Operational (amber)",
+      "planned": "Planned (rose)",
+      "heatmap": "Wind score heatmap"
+    },
+    "sea": {
+      "all": "Both",
+      "north": "North Sea",
+      "baltic": "Baltic Sea"
+    },
+    "mockNotice": "Heatmap is mock — the pipeline ships validated ERA5 wind data + BSH park registry."
+  },
   "windOn": {
     "description": "Onshore wind suitability areas with capacity and mean wind speed; existing WiSTL turbines as overlay.",
     "areas": "Suitability areas",

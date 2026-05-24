@@ -65,6 +65,22 @@
     "I": "Gastgewerbe",
     "M": "Freiberufliche Dienstleistungen"
   },
+  "windOff": {
+    "description": "Offshore-Windpotenzial in deutscher AWZ — Heatmap der mittleren Windgeschwindigkeit, Bestands- und geplante Parks als Punkte.",
+    "operational": "In Betrieb",
+    "planned": "Geplant",
+    "legend": {
+      "operational": "Bestand (gelb)",
+      "planned": "Planung (rot)",
+      "heatmap": "Wind-Score (Heatmap)"
+    },
+    "sea": {
+      "all": "Beide",
+      "north": "Nordsee",
+      "baltic": "Ostsee"
+    },
+    "mockNotice": "Heatmap ist mock — die Pipeline liefert validierte ERA5-Windkarte + BSH-Parks."
+  },
   "windOn": {
     "description": "Eignungsflächen Onshore-Wind mit Kapazität und mittlerer Windgeschwindigkeit; WiSTL-Bestandsanlagen als Overlay.",
     "areas": "Eignungsflächen",
