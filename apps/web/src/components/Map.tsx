@@ -7,6 +7,7 @@ import type { Layer } from '@deck.gl/core';
 import { GERMANY_CENTER, GERMANY_ZOOM } from '../data/germany';
 import { useAppStore } from '../state/appStore';
 import type { Bbox } from '../state/appStore';
+import { useLayersStore } from '../state/layersStore';
 
 const DEFAULT_STYLE_URL = 'https://tiles.openfreemap.org/styles/liberty';
 
@@ -46,7 +47,7 @@ function MapView() {
 
     const overlay = new MapboxOverlay({
       interleaved: true,
-      layers: [] as Layer[],
+      layers: [...useLayersStore.getState().layers] as Layer[],
     });
     map.addControl(overlay as unknown as IControl);
 
@@ -57,7 +58,12 @@ function MapView() {
     map.on('moveend', handleMoveEnd);
     map.once('load', handleMoveEnd);
 
+    const unsubscribeLayers = useLayersStore.subscribe((state) => {
+      overlay.setProps({ layers: [...state.layers] });
+    });
+
     return () => {
+      unsubscribeLayers();
       map.off('moveend', handleMoveEnd);
       map.remove();
     };

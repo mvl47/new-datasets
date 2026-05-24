@@ -53,5 +53,23 @@
   "notFound": {
     "title": "Datensatz nicht gefunden",
     "message": "Der angeforderte Datensatz existiert nicht."
+  },
+  "mastr": {
+    "description": "Anlagen aus dem Marktstammdatenregister — vor und nach Bereinigung (Duplikate, Ausreißer, Geo-Nullpunkt entfernt).",
+    "before": "Vorher (Rohdaten)",
+    "after": "Nachher (bereinigt)",
+    "toggleAria": "Zwischen Roh- und bereinigten Daten umschalten",
+    "plants": "Anlagen",
+    "capacity": "Installierte Leistung",
+    "byTech": "Nach Technologie",
+    "legend": "Technologie",
+    "cleaningImpact": "Bereinigung entfernt {{removed}} Datensätze ({{pct}}).",
+    "mockNotice": "Demodaten (deterministisch generiert) — echte MaStR-Daten folgen über die Pipeline.",
+    "tech": {
+      "solar": "Photovoltaik",
+      "wind": "Wind",
+      "biomass": "Biomasse",
+      "hydro": "Wasserkraft"
+    }
   }
 }
