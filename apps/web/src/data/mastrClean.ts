@@ -191,9 +191,17 @@ export function summarize(plants: ReadonlyArray<MastrPlant>): MastrStats {
 }
 
 let cached: GenerateResult | null = null;
+let cleanedOverride: ReadonlyArray<MastrPlant> | null = null;
+
+export function setMastrCleanedOverride(plants: ReadonlyArray<MastrPlant> | null): void {
+  cleanedOverride = plants;
+}
 
 export function getMastrData(): GenerateResult {
   if (!cached) cached = generateMastrPlants();
+  if (cleanedOverride) {
+    return { cleaned: cleanedOverride, raw: cached.raw };
+  }
   return cached;
 }
 

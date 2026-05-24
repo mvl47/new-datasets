@@ -10,6 +10,7 @@ import {
 } from '../../data/mastrClean';
 import { useAppStore } from '../../state/appStore';
 import { useLayersStore } from '../../state/layersStore';
+import { useMastrStore } from '../../state/mastrStore';
 import { buildMastrScatterLayer } from '../../layers/mastrLayers';
 import BeforeAfterSlider from '../../components/BeforeAfterSlider';
 import Legend from '../../components/Legend';
@@ -34,9 +35,13 @@ function MastrCleanView() {
   const filters = useAppStore((s) => s.filters);
   const patchFilters = useAppStore((s) => s.patchFilters);
 
-  const variant: MastrVariant = isMastrVariant(filters.variant) ? filters.variant : 'cleaned';
+  const mastrStatus = useMastrStore((s) => s.status);
+  const requestedVariant: MastrVariant = isMastrVariant(filters.variant) ? filters.variant : 'cleaned';
+  // With real MaStR loaded the pipeline already cleaned the raw — the variant toggle no longer applies.
+  const variant: MastrVariant = mastrStatus === 'loaded' ? 'cleaned' : requestedVariant;
 
-  const { raw, cleaned } = useMemo(() => getMastrData(), []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const { raw, cleaned } = useMemo(() => getMastrData(), [mastrStatus]);
   const plants = variant === 'raw' ? raw : cleaned;
 
   const stats = useMemo(() => summarize(plants), [plants]);
@@ -63,9 +68,11 @@ function MastrCleanView() {
         <h2 className="text-base font-semibold">{t('datasets.mastrClean')}</h2>
         <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{t('mastr.description')}</p>
 
-        <div className="mt-4">
-          <BeforeAfterSlider value={variant} onChange={setVariant} />
-        </div>
+        {mastrStatus !== 'loaded' && (
+          <div className="mt-4">
+            <BeforeAfterSlider value={variant} onChange={setVariant} />
+          </div>
+        )}
 
         <dl className="mt-4 grid grid-cols-2 gap-2 text-sm">
           <div>
@@ -100,15 +107,17 @@ function MastrCleanView() {
           </ul>
         </div>
 
-        <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
-          {t('mastr.cleaningImpact', {
-            removed: formatInt(removed, locale),
-            pct: formatSignedPct(removedPct, locale),
-          })}
-        </p>
+        {mastrStatus !== 'loaded' && (
+          <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
+            {t('mastr.cleaningImpact', {
+              removed: formatInt(removed, locale),
+              pct: formatSignedPct(removedPct, locale),
+            })}
+          </p>
+        )}
 
         <p className="mt-3 text-[10px] italic text-slate-400 dark:text-slate-500">
-          {t('mastr.mockNotice')}
+          {mastrStatus === 'loaded' ? t('mastr.realNotice') : t('mastr.mockNotice')}
         </p>
       </div>
       <Legend />

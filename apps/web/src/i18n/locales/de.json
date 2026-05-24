@@ -208,6 +208,7 @@
     "legend": "Technologie",
     "cleaningImpact": "Bereinigung entfernt {{removed}} Datensätze ({{pct}}).",
     "mockNotice": "Demodaten (deterministisch generiert) — echte MaStR-Daten folgen über die Pipeline.",
+    "realNotice": "Quelle: Marktstammdatenregister (Bundesnetzagentur, live geladen).",
     "tech": {
       "solar": "Photovoltaik",
       "wind": "Wind",
