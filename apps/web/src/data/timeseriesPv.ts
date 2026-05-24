@@ -50,8 +50,14 @@ export interface TimeseriesPvData {
 }
 
 let cached: TimeseriesPvData | null = null;
+let override: TimeseriesPvData | null = null;
+
+export function setTimeseriesPvOverride(data: TimeseriesPvData | null): void {
+  override = data;
+}
 
 export function getTimeseriesPv(): TimeseriesPvData {
+  if (override) return override;
   if (cached) return cached;
   const rng = mulberry32(2204);
   const byBundesland = {} as Record<BundeslandCode, Float32Array>;

@@ -9,6 +9,7 @@ import { hydrateAppStateFromHash, installUrlSync } from './state/urlSync';
 import { loadBoundaries } from './data/loadBoundaries';
 import { loadPopulation } from './data/loadPopulation';
 import { loadMastr } from './data/loadMastr';
+import { loadTimeseriesPv, loadTimeseriesWindOnshore } from './data/loadTimeseries';
 import './i18n';
 
 function App() {
@@ -29,6 +30,8 @@ function App() {
     void loadBoundaries();
     void loadPopulation();
     void loadMastr();
+    void loadTimeseriesPv();
+    void loadTimeseriesWindOnshore();
   }, []);
 
   return (

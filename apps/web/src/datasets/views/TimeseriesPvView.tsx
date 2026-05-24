@@ -12,6 +12,7 @@ import {
 import { useAppStore } from '../../state/appStore';
 import { useLayersStore } from '../../state/layersStore';
 import { useBoundariesStore } from '../../state/boundariesStore';
+import { useTimeseriesStore } from '../../state/timeseriesStore';
 import { buildChoroplethLayer } from '../../layers/choropleth';
 import { ORANGES_STOPS } from '../../layers/colorScale';
 import EChart, { type EChartOption } from '../../components/EChart';
@@ -29,7 +30,9 @@ function TimeseriesPvView() {
 
   const hour = typeof time === 'number' && time >= 0 && time < HOURS_IN_YEAR ? Math.floor(time) : 4380;
   const boundaryOverrides = useBoundariesStore((s) => s.overrides);
-  const data = useMemo(() => getTimeseriesPv(), []);
+  const pvStatus = useTimeseriesStore((s) => s.pvStatus);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const data = useMemo(() => getTimeseriesPv(), [pvStatus]);
   const currentValues = useMemo(() => valuesAtHour(data, hour), [data, hour]);
   const annual = useMemo(() => annualYieldGwh(data), [data]);
   const currentDomain = useMemo(() => {
@@ -202,7 +205,7 @@ function TimeseriesPvView() {
         </div>
 
         <p className="mt-3 text-[10px] italic text-slate-400 dark:text-slate-500">
-          {t('tsPv.mockNotice')}
+          {pvStatus === 'loaded' ? t('tsPv.realNotice') : t('tsPv.mockNotice')}
         </p>
       </div>
       <ColorScaleLegend

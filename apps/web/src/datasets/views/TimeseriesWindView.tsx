@@ -13,6 +13,7 @@ import {
 import { useAppStore } from '../../state/appStore';
 import { useLayersStore } from '../../state/layersStore';
 import { useBoundariesStore } from '../../state/boundariesStore';
+import { useTimeseriesStore } from '../../state/timeseriesStore';
 import { buildChoroplethLayer } from '../../layers/choropleth';
 import { BLUES_STOPS } from '../../layers/colorScale';
 import EChart, { type EChartOption } from '../../components/EChart';
@@ -33,8 +34,10 @@ function TimeseriesWindView() {
   const kind: WindKind = isWindKind(filters.windKind) ? filters.windKind : 'onshore';
   const hour = typeof time === 'number' && time >= 0 && time < HOURS_IN_YEAR ? Math.floor(time) : 4380;
   const boundaryOverrides = useBoundariesStore((s) => s.overrides);
+  const windOnshoreStatus = useTimeseriesStore((s) => s.windOnshoreStatus);
 
-  const data = useMemo(() => getTimeseriesWind(), []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const data = useMemo(() => getTimeseriesWind(), [windOnshoreStatus]);
   const currentValues = useMemo(() => windValuesAtHour(data, kind, hour), [data, kind, hour]);
   const national = useMemo(() => nationalSeries(data, kind), [data, kind]);
   const peak = useMemo(() => peakOfSeries(national), [national]);
@@ -191,7 +194,9 @@ function TimeseriesWindView() {
         </div>
 
         <p className="mt-3 text-[10px] italic text-slate-400 dark:text-slate-500">
-          {t('tsWind.mockNotice')}
+          {kind === 'onshore' && windOnshoreStatus === 'loaded'
+            ? t('tsWind.realNotice')
+            : t('tsWind.mockNotice')}
         </p>
       </div>
       <ColorScaleLegend

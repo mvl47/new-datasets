@@ -83,6 +83,13 @@ export interface TimeseriesWindData {
 }
 
 let cached: TimeseriesWindData | null = null;
+let onshoreOverride: TimeseriesWindData['onshore'] | null = null;
+
+export function setTimeseriesWindOnshoreOverride(
+  onshore: TimeseriesWindData['onshore'] | null,
+): void {
+  onshoreOverride = onshore;
+}
 
 function seasonalScale(dayOfYear: number): number {
   return 1.05 + 0.35 * Math.cos((2 * Math.PI * (dayOfYear - 10)) / 365);
@@ -93,7 +100,11 @@ function diurnal(hourOfDay: number): number {
 }
 
 export function getTimeseriesWind(): TimeseriesWindData {
-  if (cached) return cached;
+  if (cached) {
+    return onshoreOverride
+      ? { onshore: onshoreOverride, offshore: cached.offshore }
+      : cached;
+  }
   const rngOn = mulberry32(7711);
   const rngOff = mulberry32(7712);
 
@@ -142,6 +153,9 @@ export function getTimeseriesWind(): TimeseriesWindData {
       national: offshoreNational,
     },
   };
+  if (onshoreOverride) {
+    return { onshore: onshoreOverride, offshore: cached.offshore };
+  }
   return cached;
 }
 

@@ -101,6 +101,7 @@
     "profile": "National profile",
     "legendTitle": "Generation per Bundesland",
     "mockNotice": "Power-curve + seasonal mock — the pipeline ships ERA5 + real plant positions.",
+    "realNotice": "Source: ERA5 / Copernicus CDS — onshore profile via power-curve on 100m wind.",
     "kind": {
       "onshore": "Onshore",
       "offshore": "Offshore"
@@ -114,7 +115,8 @@
     "nationalProfile": "National profile",
     "annual": "Top 3 annual yield",
     "legendTitle": "Generation per Bundesland",
-    "mockNotice": "Synthetic profile (clear-sky + cloud noise) — the pipeline ships ERA5-based profiles."
+    "mockNotice": "Synthetic profile (clear-sky + cloud noise) — the pipeline ships ERA5-based profiles.",
+    "realNotice": "Source: ERA5 / Copernicus CDS — per-Bundesland aggregation via VG250 grid mask."
   },
   "windOff": {
     "description": "Offshore wind potential in the German EEZ — mean wind heatmap; existing and planned parks as points.",

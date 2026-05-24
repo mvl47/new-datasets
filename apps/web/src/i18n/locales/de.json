@@ -101,6 +101,7 @@
     "profile": "Nationaler Verlauf",
     "legendTitle": "Erzeugung je Land",
     "mockNotice": "Power-Kurve + saisonaler Mock — die Pipeline liefert ERA5 + reale Standorte.",
+    "realNotice": "Quelle: ERA5 / Copernicus CDS — Onshore-Profile per Power-Kurve aus 100m-Wind.",
     "kind": {
       "onshore": "Onshore",
       "offshore": "Offshore"
@@ -114,7 +115,8 @@
     "nationalProfile": "Nationaler Verlauf",
     "annual": "Top-3 Jahresertrag",
     "legendTitle": "Erzeugung je Land",
-    "mockNotice": "Synthetisches Profil (Klarhimmel + Wolken-Noise) — die Pipeline liefert ERA5-basierte Profile."
+    "mockNotice": "Synthetisches Profil (Klarhimmel + Wolken-Noise) — die Pipeline liefert ERA5-basierte Profile.",
+    "realNotice": "Quelle: ERA5 / Copernicus CDS — Per-Bundesland aggregiert via VG250 Grid-Mask."
   },
   "windOff": {
     "description": "Offshore-Windpotenzial in deutscher AWZ — Heatmap der mittleren Windgeschwindigkeit, Bestands- und geplante Parks als Punkte.",
