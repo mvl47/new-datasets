@@ -65,6 +65,18 @@
     "I": "Hospitality",
     "M": "Professional services"
   },
+  "phh": {
+    "description": "Household electricity demand — switch between Bundesland choropleth and heatmap (mock 100 m raster).",
+    "totalLabel": "Total demand",
+    "perCapita": "Per capita",
+    "topThree": "Top 3 Bundesländer",
+    "legendTitle": "Demand per Bundesland",
+    "rasterNotice": "Heatmap is mock — the pipeline ships a real 100 m raster (Census 2022).",
+    "resolution": {
+      "bundesland": "Bundesland",
+      "raster": "Raster"
+    }
+  },
   "ghd": {
     "description": "Commercial / services electricity demand per Bundesland — schematic.",
     "group": "WZ group",

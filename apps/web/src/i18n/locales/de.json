@@ -65,6 +65,18 @@
     "I": "Gastgewerbe",
     "M": "Freiberufliche Dienstleistungen"
   },
+  "phh": {
+    "description": "Stromverbrauch der Privathaushalte — wahlweise je Bundesland oder als Heatmap (Mock-100m-Raster).",
+    "totalLabel": "Verbrauch gesamt",
+    "perCapita": "Pro Kopf",
+    "topThree": "Top 3 Bundesländer",
+    "legendTitle": "Verbrauch je Land",
+    "rasterNotice": "Heatmap ist Mock — die Pipeline liefert ein echtes 100m-Raster (Census 2022).",
+    "resolution": {
+      "bundesland": "Bundesland",
+      "raster": "Raster"
+    }
+  },
   "ghd": {
     "description": "Stromverbrauch im GHD-Sektor (Gewerbe, Handel, Dienstleistungen) je Bundesland — schematisch.",
     "group": "WZ-Gruppe",
