@@ -1,0 +1,23 @@
+{
+  "comment": "Installed PV capacity per Bundesland in MWp. Approximations for end-2023. Replace with a fresh BNetzA Anlagenregister extract when running the pipeline against current data.",
+  "source": "BNetzA Anlagenregister 2023-Q4 (rounded)",
+  "unit": "MWp",
+  "values": {
+    "BW": 9800,
+    "BY": 23800,
+    "BE": 220,
+    "BB": 5700,
+    "HB": 130,
+    "HH": 250,
+    "HE": 4100,
+    "MV": 4200,
+    "NI": 7500,
+    "NW": 8400,
+    "RP": 4200,
+    "SL": 720,
+    "SN": 3400,
+    "ST": 4100,
+    "SH": 3800,
+    "TH": 2200
+  }
+}

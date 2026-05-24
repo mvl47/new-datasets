@@ -198,39 +198,113 @@ def _process_pv(year: int, force: bool) -> Path:
     return target
 
 
+CONFIG_DIR = Path(__file__).parent / "config"
+WIND_CAPACITY_FILE = CONFIG_DIR / "capacities_wind_onshore.json"
+PV_CAPACITY_FILE = CONFIG_DIR / "capacities_pv.json"
+
+
+def load_capacities(config_file: Path) -> dict[str, float]:
+    """Load a per-Bundesland MW/MWp capacity table from JSON config."""
+    with config_file.open("r", encoding="utf-8") as fp:
+        payload = json.load(fp)
+    values = payload.get("values", {})
+    if not isinstance(values, dict):
+        raise ValueError(f"{config_file}: 'values' must be an object")
+    return {str(k): float(v) for k, v in values.items()}
+
+
 def _load_wind_capacities() -> Mapping[str, float]:
-    raise NotImplementedError(
-        "Per-Bundesland onshore wind capacity in MW must be supplied via a "
-        "config file once the BKG boundaries + a BNetzA capacity table are "
-        "wired in (next pass)."
-    )
+    return load_capacities(WIND_CAPACITY_FILE)
 
 
 def _load_pv_capacities() -> Mapping[str, float]:
-    raise NotImplementedError(
-        "Per-Bundesland PV capacity in MWp must be supplied via a config "
-        "file once the BKG boundaries + a BNetzA capacity table are wired "
-        "in (next pass)."
-    )
+    return load_capacities(PV_CAPACITY_FILE)
+
+
+def aggregate_per_bundesland_wind(
+    speed_ms: np.ndarray,
+    cell_index: Mapping[str, tuple[list[int], list[int]]],
+    capacities: Mapping[str, float],
+) -> dict[str, np.ndarray]:
+    """Per-Bundesland hourly wind generation (MW).
+
+    Arguments:
+      speed_ms     -- shape ``(time, lat, lon)`` wind speed magnitude
+      cell_index   -- ``{code: (lat_idxs, lon_idxs)}`` from masking.cells_to_index_arrays
+      capacities   -- ``{code: installed_MW}``
+    """
+    out: dict[str, np.ndarray] = {}
+    n_times = speed_ms.shape[0]
+    for code, (lat_idxs, lon_idxs) in cell_index.items():
+        if code not in capacities or not lat_idxs:
+            out[code] = np.zeros(n_times, dtype=np.float64)
+            continue
+        cells = speed_ms[:, lat_idxs, lon_idxs]
+        mean_speed = cells.mean(axis=1)
+        cf = wind_power_curve(mean_speed)
+        out[code] = cf * float(capacities[code])
+    return out
+
+
+def aggregate_per_bundesland_pv(
+    ssrd_j_per_m2: np.ndarray,
+    cell_index: Mapping[str, tuple[list[int], list[int]]],
+    capacities: Mapping[str, float],
+) -> dict[str, np.ndarray]:
+    """Per-Bundesland hourly PV generation (MW)."""
+    out: dict[str, np.ndarray] = {}
+    n_times = ssrd_j_per_m2.shape[0]
+    for code, (lat_idxs, lon_idxs) in cell_index.items():
+        if code not in capacities or not lat_idxs:
+            out[code] = np.zeros(n_times, dtype=np.float64)
+            continue
+        cells = ssrd_j_per_m2[:, lat_idxs, lon_idxs]
+        mean_ssrd = cells.mean(axis=1)
+        cf = pv_capacity_factor(mean_ssrd)
+        out[code] = cf * float(capacities[code])
+    return out
 
 
 def _aggregate_per_bundesland_wind(
     ds: xr.Dataset,
     capacities: Mapping[str, float],
 ) -> dict[str, np.ndarray]:
-    raise NotImplementedError(
-        "Per-Bundesland masking via the BKG VG250 GeoJSON is wired in by a "
-        "follow-up commit (regionmask + xarray.weighted)."
-    )
+    """xarray adapter: read u/v from a Dataset and aggregate via grid mask."""
+    from .masking import build_grid_mask, cells_to_index_arrays, load_bundesland_polygons
+
+    lat_name, lon_name = _coord_names(ds)
+    lats = ds[lat_name].values
+    lons = ds[lon_name].values
+    polygons = load_bundesland_polygons(output_dir() / "bundeslaender.geojson")
+    cell_index = cells_to_index_arrays(build_grid_mask(polygons, lats, lons))
+    u = ds["u100"].values if "u100" in ds.variables else ds["100m_u_component_of_wind"].values
+    v = ds["v100"].values if "v100" in ds.variables else ds["100m_v_component_of_wind"].values
+    speed = wind_speed(u, v)
+    return aggregate_per_bundesland_wind(speed, cell_index, capacities)
 
 
 def _aggregate_per_bundesland_pv(
     ds: xr.Dataset,
     capacities: Mapping[str, float],
 ) -> dict[str, np.ndarray]:
-    raise NotImplementedError(
-        "See _aggregate_per_bundesland_wind — same masking strategy applies."
-    )
+    """xarray adapter: read ssrd from a Dataset and aggregate via grid mask."""
+    from .masking import build_grid_mask, cells_to_index_arrays, load_bundesland_polygons
+
+    lat_name, lon_name = _coord_names(ds)
+    lats = ds[lat_name].values
+    lons = ds[lon_name].values
+    polygons = load_bundesland_polygons(output_dir() / "bundeslaender.geojson")
+    cell_index = cells_to_index_arrays(build_grid_mask(polygons, lats, lons))
+    ssrd_name = "ssrd" if "ssrd" in ds.variables else "surface_solar_radiation_downwards"
+    ssrd = ds[ssrd_name].values
+    return aggregate_per_bundesland_pv(ssrd, cell_index, capacities)
+
+
+def _coord_names(ds: xr.Dataset) -> tuple[str, str]:
+    """Pick the lat/lon coordinate names — ERA5 ships them as latitude/longitude."""
+    lat_name = next((n for n in ("latitude", "lat") if n in ds.coords), "latitude")
+    lon_name = next((n for n in ("longitude", "lon") if n in ds.coords), "longitude")
+    return lat_name, lon_name
 
 
 def run_era5(*, force: bool = False, variable: str = "both") -> list[Path]:

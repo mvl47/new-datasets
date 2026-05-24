@@ -1,0 +1,23 @@
+{
+  "comment": "Installed onshore wind capacity per Bundesland in MW. Approximations for end-2023. Replace with a fresh BNetzA Anlagenregister extract when running the pipeline against current data.",
+  "source": "BNetzA Anlagenregister 2023-Q4 (rounded)",
+  "unit": "MW",
+  "values": {
+    "BW": 1900,
+    "BY": 2700,
+    "BE": 10,
+    "BB": 8000,
+    "HB": 200,
+    "HH": 140,
+    "HE": 2400,
+    "MV": 3700,
+    "NI": 12500,
+    "NW": 7000,
+    "RP": 3800,
+    "SL": 150,
+    "SN": 1300,
+    "ST": 5500,
+    "SH": 9000,
+    "TH": 1700
+  }
+}
