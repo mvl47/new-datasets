@@ -1,0 +1,16 @@
+{
+  "name": "ffe-geodata-platform",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@10.33.0",
+  "scripts": {
+    "dev": "pnpm --filter web dev",
+    "build": "pnpm --filter web build",
+    "preview": "pnpm --filter web preview",
+    "lint": "pnpm --filter web lint",
+    "format": "pnpm --filter web format",
+    "test": "pnpm --filter web test"
+  }
+}
