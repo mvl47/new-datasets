@@ -29,6 +29,25 @@ export const ORANGES_STOPS: ReadonlyArray<ColorStop> = [
   { t: 1.0, rgb: [127, 39, 4] },
 ];
 
+export const DIVERGING_RED_BLUE_STOPS: ReadonlyArray<ColorStop> = [
+  { t: 0.0, rgb: [178, 24, 43] },
+  { t: 0.25, rgb: [239, 138, 98] },
+  { t: 0.5, rgb: [247, 247, 247] },
+  { t: 0.75, rgb: [103, 169, 207] },
+  { t: 1.0, rgb: [33, 102, 172] },
+];
+
+export function makeDivergingScale(
+  stops: ReadonlyArray<ColorStop>,
+  half: number,
+): (value: number) => RGB {
+  const span = Math.max(Number.EPSILON, half);
+  return (value: number) => {
+    const t = 0.5 + value / (2 * span);
+    return sampleScale(stops, Math.max(0, Math.min(1, t)));
+  };
+}
+
 function lerp(a: number, b: number, t: number): number {
   return a + (b - a) * t;
 }

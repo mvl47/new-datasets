@@ -18,6 +18,7 @@ import PotentialWindOnshoreView from './views/PotentialWindOnshoreView';
 import PotentialWindOffshoreView from './views/PotentialWindOffshoreView';
 import TimeseriesPvView from './views/TimeseriesPvView';
 import TimeseriesWindView from './views/TimeseriesWindView';
+import PopulationView from './views/PopulationView';
 
 const VIEWS: Partial<Record<DatasetSlug, ComponentType>> = {
   'mastr-clean': MastrCleanView,
@@ -29,6 +30,7 @@ const VIEWS: Partial<Record<DatasetSlug, ComponentType>> = {
   'potential-wind-offshore': PotentialWindOffshoreView,
   'timeseries-pv': TimeseriesPvView,
   'timeseries-wind': TimeseriesWindView,
+  population: PopulationView,
 };
 
 function PlaceholderView({ meta }: { meta: DatasetMeta }) {

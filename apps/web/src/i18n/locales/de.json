@@ -65,6 +65,17 @@
     "I": "Gastgewerbe",
     "M": "Freiberufliche Dienstleistungen"
   },
+  "population": {
+    "description": "Bevölkerungsentwicklung 2010–2030 — Karte zeigt Wachstumsrate gegenüber 2010 (rot = Rückgang, blau = Zuwachs).",
+    "year": "Jahr",
+    "national": "Deutschland",
+    "vsBaseline": "Δ gegenüber 2010",
+    "profile": "Verlauf Deutschland",
+    "fastestGrowth": "Stärkstes Wachstum",
+    "fastestDecline": "Stärkster Rückgang",
+    "legendTitle": "Wachstum gegenüber 2010",
+    "mockNotice": "Vereinfachte Trends (Destatis-konsistente Raten 2010-2030) — die Pipeline nutzt amtliche Bevölkerungsfortschreibung."
+  },
   "tsWind": {
     "description": "8760-h-Erzeugungsprofil Wind — Toggle Onshore/Offshore; Karte zur gewählten Stunde, Diagramm zeigt den Verlauf.",
     "hour": "Stunde im Jahr",

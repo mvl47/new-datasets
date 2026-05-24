@@ -65,6 +65,17 @@
     "I": "Hospitality",
     "M": "Professional services"
   },
+  "population": {
+    "description": "Population development 2010–2030 — choropleth shows growth vs 2010 (red = decline, blue = growth).",
+    "year": "Year",
+    "national": "Germany",
+    "vsBaseline": "Δ vs 2010",
+    "profile": "National progression",
+    "fastestGrowth": "Fastest growth",
+    "fastestDecline": "Fastest decline",
+    "legendTitle": "Growth vs 2010",
+    "mockNotice": "Simplified trends (Destatis-consistent 2010-2030 rates) — the pipeline uses official population data."
+  },
   "tsWind": {
     "description": "8760-h wind generation profile — onshore/offshore toggle; choropleth at selected hour, chart shows the progression.",
     "hour": "Hour of year",
