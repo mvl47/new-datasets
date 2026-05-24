@@ -54,6 +54,26 @@
     "title": "Dataset not found",
     "message": "The requested dataset does not exist."
   },
+  "common": {
+    "mockNotice": "Mock data (deterministically generated) — real values ship via the data pipeline."
+  },
+  "wz": {
+    "C": "Manufacturing",
+    "F": "Construction",
+    "G": "Trade",
+    "H": "Transport & storage",
+    "I": "Hospitality",
+    "M": "Professional services"
+  },
+  "consumptionIndustry": {
+    "description": "Industrial electricity demand per Bundesland by WZ section (schematic — Bundesländer shown as symbols).",
+    "wzSection": "WZ section",
+    "total": "Industry total",
+    "totalLabel": "Sum",
+    "share": "Share",
+    "ranking": "Ranking",
+    "legendTitle": "Demand per Bundesland"
+  },
   "mastr": {
     "description": "Plants from the Marktstammdatenregister — before and after cleaning (duplicates, outliers, geo null-island removed).",
     "before": "Before (raw)",
