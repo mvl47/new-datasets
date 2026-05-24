@@ -65,6 +65,21 @@
     "I": "Hospitality",
     "M": "Professional services"
   },
+  "tsWind": {
+    "description": "8760-h wind generation profile — onshore/offshore toggle; choropleth at selected hour, chart shows the progression.",
+    "hour": "Hour of year",
+    "now": "Now",
+    "cf": "Capacity factor",
+    "peak": "Annual peak",
+    "peakAt": "Peak at",
+    "profile": "National profile",
+    "legendTitle": "Generation per Bundesland",
+    "mockNotice": "Power-curve + seasonal mock — the pipeline ships ERA5 + real plant positions.",
+    "kind": {
+      "onshore": "Onshore",
+      "offshore": "Offshore"
+    }
+  },
   "tsPv": {
     "description": "Synthetic 8760-h PV generation profile — choropleth at the selected hour, chart shows national progression.",
     "hour": "Hour of year",

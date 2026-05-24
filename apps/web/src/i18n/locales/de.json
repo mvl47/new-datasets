@@ -65,6 +65,21 @@
     "I": "Gastgewerbe",
     "M": "Freiberufliche Dienstleistungen"
   },
+  "tsWind": {
+    "description": "8760-h-Erzeugungsprofil Wind — Toggle Onshore/Offshore; Karte zur gewählten Stunde, Diagramm zeigt den Verlauf.",
+    "hour": "Stunde im Jahr",
+    "now": "Aktuell",
+    "cf": "Kapazitätsfaktor",
+    "peak": "Jahres-Peak",
+    "peakAt": "Peak um",
+    "profile": "Nationaler Verlauf",
+    "legendTitle": "Erzeugung je Land",
+    "mockNotice": "Power-Kurve + saisonaler Mock — die Pipeline liefert ERA5 + reale Standorte.",
+    "kind": {
+      "onshore": "Onshore",
+      "offshore": "Offshore"
+    }
+  },
   "tsPv": {
     "description": "Synthetisches 8760-h-Erzeugungsprofil PV — Karte zeigt Bundesländer zur gewählten Stunde, Diagramm den nationalen Tagesverlauf.",
     "hour": "Stunde im Jahr",
