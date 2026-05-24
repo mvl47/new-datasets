@@ -32,12 +32,21 @@ coverage/
 # Python (later phases)
 __pycache__/
 *.pyc
+*.egg-info/
 .venv/
 venv/
 .ipynb_checkpoints/
+.pytest_cache/
+.ruff_cache/
+uv.lock
 
 # Data outputs (large, regenerated from pipeline)
 data-pipeline/output/
+data-pipeline/data/cache/
+data-pipeline/data/out/
+apps/web/public/data/*.geojson
+apps/web/public/data/*.json
+!apps/web/public/data/.gitkeep
 *.pmtiles
 *.geoparquet
 *.cog.tif
