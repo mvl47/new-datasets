@@ -65,6 +65,21 @@
     "I": "Gastgewerbe",
     "M": "Freiberufliche Dienstleistungen"
   },
+  "windOn": {
+    "description": "Eignungsflächen Onshore-Wind mit Kapazität und mittlerer Windgeschwindigkeit; WiSTL-Bestandsanlagen als Overlay.",
+    "areas": "Eignungsflächen",
+    "capacity": "Potenzial",
+    "area": "Fläche",
+    "meanWind": "Mittl. Wind",
+    "turbines": "WiSTL-Anlagen",
+    "wistlNote": "Bestandsanlagen — gelb",
+    "mockNotice": "Schematische Mock-Polygone — die Pipeline liefert echte WiSTL-Daten + Eignungsflächen.",
+    "view": {
+      "areas": "Flächen",
+      "turbines": "Anlagen",
+      "both": "Beides"
+    }
+  },
   "pv": {
     "description": "Potenzialflächen für Freiflächen-Photovoltaik mit Kapazität (MWp), Ertrag (GWh) und Eignungs-Score.",
     "minCapacity": "Mindest-Kapazität",

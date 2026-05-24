@@ -65,6 +65,21 @@
     "I": "Hospitality",
     "M": "Professional services"
   },
+  "windOn": {
+    "description": "Onshore wind suitability areas with capacity and mean wind speed; existing WiSTL turbines as overlay.",
+    "areas": "Suitability areas",
+    "capacity": "Potential",
+    "area": "Area",
+    "meanWind": "Mean wind",
+    "turbines": "WiSTL turbines",
+    "wistlNote": "Existing turbines — amber",
+    "mockNotice": "Schematic mock polygons — the pipeline ships real WiSTL data + suitability areas.",
+    "view": {
+      "areas": "Areas",
+      "turbines": "Turbines",
+      "both": "Both"
+    }
+  },
   "pv": {
     "description": "Ground-mounted PV potential sites with capacity (MWp), annual yield (GWh), suitability score.",
     "minCapacity": "Min. capacity",
