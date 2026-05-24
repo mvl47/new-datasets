@@ -11,10 +11,12 @@ import {
 import { useAppStore } from '../state/appStore';
 import MastrCleanView from './views/MastrCleanView';
 import ConsumptionIndustryView from './views/ConsumptionIndustryView';
+import ConsumptionGhdView from './views/ConsumptionGhdView';
 
 const VIEWS: Partial<Record<DatasetSlug, ComponentType>> = {
   'mastr-clean': MastrCleanView,
   'consumption-industry': ConsumptionIndustryView,
+  'consumption-ghd': ConsumptionGhdView,
 };
 
 function PlaceholderView({ meta }: { meta: DatasetMeta }) {

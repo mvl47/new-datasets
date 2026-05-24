@@ -65,6 +65,21 @@
     "I": "Gastgewerbe",
     "M": "Freiberufliche Dienstleistungen"
   },
+  "ghd": {
+    "description": "Stromverbrauch im GHD-Sektor (Gewerbe, Handel, Dienstleistungen) je Bundesland — schematisch.",
+    "group": "WZ-Gruppe",
+    "total": "GHD gesamt",
+    "totalLabel": "Summe",
+    "donutTitle": "Aufteilung Deutschland",
+    "legendTitle": "Verbrauch je Land",
+    "group_": "Gruppe",
+    "group.G": "Handel",
+    "group.I": "Gastgewerbe",
+    "group.J": "IKT",
+    "group.M": "Wissenschaft & Technik",
+    "group.O": "Öffentliche Verwaltung",
+    "group.Q": "Gesundheit & Soziales"
+  },
   "consumptionIndustry": {
     "description": "Stromverbrauch der Industrie je Bundesland nach WZ-Abteilung (schematische Darstellung — Bundesländer als Symbole).",
     "wzSection": "WZ-Abteilung",

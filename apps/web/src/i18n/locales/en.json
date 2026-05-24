@@ -65,6 +65,20 @@
     "I": "Hospitality",
     "M": "Professional services"
   },
+  "ghd": {
+    "description": "Commercial / services electricity demand per Bundesland — schematic.",
+    "group": "WZ group",
+    "total": "GHD total",
+    "totalLabel": "Sum",
+    "donutTitle": "National split",
+    "legendTitle": "Demand per Bundesland",
+    "group.G": "Trade",
+    "group.I": "Hospitality",
+    "group.J": "ICT",
+    "group.M": "Science & technical",
+    "group.O": "Public administration",
+    "group.Q": "Health & social"
+  },
   "consumptionIndustry": {
     "description": "Industrial electricity demand per Bundesland by WZ section (schematic — Bundesländer shown as symbols).",
     "wzSection": "WZ section",
