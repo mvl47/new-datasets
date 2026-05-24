@@ -65,6 +65,20 @@
     "I": "Hospitality",
     "M": "Professional services"
   },
+  "pv": {
+    "description": "Ground-mounted PV potential sites with capacity (MWp), annual yield (GWh), suitability score.",
+    "minCapacity": "Min. capacity",
+    "sites": "Sites",
+    "capacity": "Capacity",
+    "yield": "Annual yield",
+    "area": "Area",
+    "leader": "Leader",
+    "mockNotice": "Schematic mock polygons — the pipeline ships real suitability areas (solar solutions methodology).",
+    "mode": {
+      "flat": "2D",
+      "extruded": "3D"
+    }
+  },
   "phh": {
     "description": "Household electricity demand — switch between Bundesland choropleth and heatmap (mock 100 m raster).",
     "totalLabel": "Total demand",

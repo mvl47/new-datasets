@@ -65,6 +65,20 @@
     "I": "Gastgewerbe",
     "M": "Freiberufliche Dienstleistungen"
   },
+  "pv": {
+    "description": "Potenzialflächen für Freiflächen-Photovoltaik mit Kapazität (MWp), Ertrag (GWh) und Eignungs-Score.",
+    "minCapacity": "Mindest-Kapazität",
+    "sites": "Flächen",
+    "capacity": "Kapazität",
+    "yield": "Jahresertrag",
+    "area": "Fläche",
+    "leader": "Spitzenreiter",
+    "mockNotice": "Schematische Mock-Polygone — die Pipeline liefert echte Eignungsflächen (Solar-Solutions-Methodik).",
+    "mode": {
+      "flat": "2D",
+      "extruded": "3D"
+    }
+  },
   "phh": {
     "description": "Stromverbrauch der Privathaushalte — wahlweise je Bundesland oder als Heatmap (Mock-100m-Raster).",
     "totalLabel": "Verbrauch gesamt",
