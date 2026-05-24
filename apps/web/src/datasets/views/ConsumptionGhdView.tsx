@@ -11,6 +11,7 @@ import {
 import { domainFor } from '../../data/consumptionIndustry';
 import { useAppStore } from '../../state/appStore';
 import { useLayersStore } from '../../state/layersStore';
+import { useBoundariesStore } from '../../state/boundariesStore';
 import { buildChoroplethLayer } from '../../layers/choropleth';
 import { BLUES_STOPS } from '../../layers/colorScale';
 import ColorScaleLegend from '../../components/ColorScaleLegend';
@@ -36,6 +37,7 @@ function ConsumptionGhdView() {
   const patchFilters = useAppStore((s) => s.patchFilters);
 
   const group: GhdGroup = isGhdGroup(filters.ghdGroup) ? filters.ghdGroup : 'TOTAL';
+  const boundaryOverrides = useBoundariesStore((s) => s.overrides);
 
   const records = useMemo(() => getGhdConsumption(), []);
   const values = useMemo(() => ghdValuesFor(records, group), [records, group]);
@@ -51,7 +53,7 @@ function ConsumptionGhdView() {
     });
     useLayersStore.getState().setLayers([layer]);
     return () => useLayersStore.getState().clear();
-  }, [values, domain, group]);
+  }, [values, domain, group, boundaryOverrides]);
 
   const total = useMemo(() => {
     let s = 0;

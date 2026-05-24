@@ -11,6 +11,7 @@ import {
 } from '../../data/consumptionIndustry';
 import { useAppStore } from '../../state/appStore';
 import { useLayersStore } from '../../state/layersStore';
+import { useBoundariesStore } from '../../state/boundariesStore';
 import { buildChoroplethLayer } from '../../layers/choropleth';
 import { ORANGES_STOPS } from '../../layers/colorScale';
 import ColorScaleLegend from '../../components/ColorScaleLegend';
@@ -26,6 +27,7 @@ function ConsumptionIndustryView() {
   const patchFilters = useAppStore((s) => s.patchFilters);
 
   const section: WzSection = isWzSection(filters.wzSection) ? filters.wzSection : 'TOTAL';
+  const boundaryOverrides = useBoundariesStore((s) => s.overrides);
 
   const records = useMemo(() => getIndustryConsumption(), []);
   const values = useMemo(() => valuesFor(records, section), [records, section]);
@@ -40,7 +42,7 @@ function ConsumptionIndustryView() {
     });
     useLayersStore.getState().setLayers([layer]);
     return () => useLayersStore.getState().clear();
-  }, [values, domain, section]);
+  }, [values, domain, section, boundaryOverrides]);
 
   const sorted = useMemo(() => {
     const list = BUNDESLAENDER.map((b) => ({

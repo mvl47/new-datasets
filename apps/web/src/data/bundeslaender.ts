@@ -59,13 +59,33 @@ function octagonAt(lon: number, lat: number, radius: number): [number, number][]
   return coords;
 }
 
+export type BundeslandGeometry =
+  | { type: 'Polygon'; coordinates: [number, number][][] }
+  | { type: 'MultiPolygon'; coordinates: [number, number][][][] };
+
 export interface BundeslandFeature {
   type: 'Feature';
   properties: { code: BundeslandCode; nameDe: string; nameEn: string };
-  geometry: { type: 'Polygon'; coordinates: [number, number][][] };
+  geometry: BundeslandGeometry;
+}
+
+let geometryOverrides: Map<BundeslandCode, BundeslandGeometry> | null = null;
+
+export function setBundeslandGeometryOverrides(
+  overrides: Map<BundeslandCode, BundeslandGeometry> | null,
+): void {
+  geometryOverrides = overrides;
 }
 
 export function bundeslandFeature(b: Bundesland): BundeslandFeature {
+  const override = geometryOverrides?.get(b.code);
+  if (override) {
+    return {
+      type: 'Feature',
+      properties: { code: b.code, nameDe: b.nameDe, nameEn: b.nameEn },
+      geometry: override,
+    };
+  }
   const radius = Math.min(MAX_RADIUS, Math.max(MIN_RADIUS, Math.sqrt(b.areaKm2) * SCALE));
   return {
     type: 'Feature',
@@ -79,4 +99,8 @@ export function bundeslandFeature(b: Bundesland): BundeslandFeature {
 
 export function findBundesland(code: BundeslandCode): Bundesland | undefined {
   return BUNDESLAENDER.find((b) => b.code === code);
+}
+
+export function isBundeslandCode(value: unknown): value is BundeslandCode {
+  return typeof value === 'string' && BUNDESLAENDER.some((b) => b.code === value);
 }

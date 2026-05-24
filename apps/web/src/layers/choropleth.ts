@@ -1,5 +1,10 @@
 import { GeoJsonLayer } from 'deck.gl';
-import { BUNDESLAENDER, bundeslandFeature, type BundeslandCode } from '../data/bundeslaender';
+import {
+  BUNDESLAENDER,
+  bundeslandFeature,
+  type BundeslandCode,
+  type BundeslandGeometry,
+} from '../data/bundeslaender';
 import { makeLinearScale, type ColorStop, type RGB } from './colorScale';
 
 export interface ChoroplethFeatureProps {
@@ -12,7 +17,7 @@ export interface ChoroplethFeatureProps {
 export interface ChoroplethFeature {
   type: 'Feature';
   properties: ChoroplethFeatureProps;
-  geometry: { type: 'Polygon'; coordinates: [number, number][][] };
+  geometry: BundeslandGeometry;
 }
 
 export interface ChoroplethFeatureCollection {

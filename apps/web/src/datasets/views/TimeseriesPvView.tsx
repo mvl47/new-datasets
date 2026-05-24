@@ -11,6 +11,7 @@ import {
 } from '../../data/timeseriesPv';
 import { useAppStore } from '../../state/appStore';
 import { useLayersStore } from '../../state/layersStore';
+import { useBoundariesStore } from '../../state/boundariesStore';
 import { buildChoroplethLayer } from '../../layers/choropleth';
 import { ORANGES_STOPS } from '../../layers/colorScale';
 import EChart, { type EChartOption } from '../../components/EChart';
@@ -27,6 +28,7 @@ function TimeseriesPvView() {
   const setTime = useAppStore((s) => s.setTime);
 
   const hour = typeof time === 'number' && time >= 0 && time < HOURS_IN_YEAR ? Math.floor(time) : 4380;
+  const boundaryOverrides = useBoundariesStore((s) => s.overrides);
   const data = useMemo(() => getTimeseriesPv(), []);
   const currentValues = useMemo(() => valuesAtHour(data, hour), [data, hour]);
   const annual = useMemo(() => annualYieldGwh(data), [data]);
@@ -58,7 +60,7 @@ function TimeseriesPvView() {
     });
     useLayersStore.getState().setLayers([layer]);
     return () => useLayersStore.getState().clear();
-  }, [currentValues, peakDomain, hour]);
+  }, [currentValues, peakDomain, hour, boundaryOverrides]);
 
   const nationalSeries = useMemo(() => {
     const series = data.national;

@@ -12,6 +12,7 @@ import {
 } from '../../data/timeseriesWind';
 import { useAppStore } from '../../state/appStore';
 import { useLayersStore } from '../../state/layersStore';
+import { useBoundariesStore } from '../../state/boundariesStore';
 import { buildChoroplethLayer } from '../../layers/choropleth';
 import { BLUES_STOPS } from '../../layers/colorScale';
 import EChart, { type EChartOption } from '../../components/EChart';
@@ -31,6 +32,7 @@ function TimeseriesWindView() {
 
   const kind: WindKind = isWindKind(filters.windKind) ? filters.windKind : 'onshore';
   const hour = typeof time === 'number' && time >= 0 && time < HOURS_IN_YEAR ? Math.floor(time) : 4380;
+  const boundaryOverrides = useBoundariesStore((s) => s.overrides);
 
   const data = useMemo(() => getTimeseriesWind(), []);
   const currentValues = useMemo(() => windValuesAtHour(data, kind, hour), [data, kind, hour]);
@@ -56,7 +58,7 @@ function TimeseriesWindView() {
     });
     useLayersStore.getState().setLayers([layer]);
     return () => useLayersStore.getState().clear();
-  }, [currentValues, peakDomain, kind, hour]);
+  }, [currentValues, peakDomain, kind, hour, boundaryOverrides]);
 
   const seriesPoints = useMemo(() => {
     const pts = new Array<[number, number]>(national.length);

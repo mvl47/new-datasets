@@ -6,6 +6,7 @@ import RightPanel from './components/RightPanel';
 import MapView from './components/Map';
 import { useThemeStore } from './state/themeStore';
 import { hydrateAppStateFromHash, installUrlSync } from './state/urlSync';
+import { loadBoundaries } from './data/loadBoundaries';
 import './i18n';
 
 function App() {
@@ -20,6 +21,10 @@ function App() {
   useEffect(() => {
     hydrateAppStateFromHash();
     return installUrlSync();
+  }, []);
+
+  useEffect(() => {
+    void loadBoundaries();
   }, []);
 
   return (

@@ -11,6 +11,7 @@ import {
 import { domainFor } from '../../data/consumptionIndustry';
 import { useAppStore } from '../../state/appStore';
 import { useLayersStore } from '../../state/layersStore';
+import { useBoundariesStore } from '../../state/boundariesStore';
 import { buildChoroplethLayer } from '../../layers/choropleth';
 import { BLUES_STOPS, ORANGES_STOPS } from '../../layers/colorScale';
 import ColorScaleLegend from '../../components/ColorScaleLegend';
@@ -32,6 +33,7 @@ function WeatherView() {
   const selected: BundeslandCode | null = isBundeslandCode(filters.weatherSelected)
     ? filters.weatherSelected
     : null;
+  const boundaryOverrides = useBoundariesStore((s) => s.overrides);
 
   const climate = useMemo(() => getWeather(), []);
   const values = useMemo(() => valuesForMetric(climate, metric), [climate, metric]);
@@ -50,7 +52,7 @@ function WeatherView() {
     });
     useLayersStore.getState().setLayers([layer]);
     return () => useLayersStore.getState().clear();
-  }, [metric, values, domain, stops, selected, patchFilters]);
+  }, [metric, values, domain, stops, selected, patchFilters, boundaryOverrides]);
 
   const activeCode: BundeslandCode = selected ?? 'BY';
   const activeMeta = BUNDESLAENDER.find((b) => b.code === activeCode);

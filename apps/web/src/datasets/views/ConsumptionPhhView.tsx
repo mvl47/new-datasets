@@ -13,6 +13,7 @@ import {
 import { domainFor } from '../../data/consumptionIndustry';
 import { useAppStore } from '../../state/appStore';
 import { useLayersStore } from '../../state/layersStore';
+import { useBoundariesStore } from '../../state/boundariesStore';
 import { buildChoroplethLayer } from '../../layers/choropleth';
 import { BLUES_STOPS } from '../../layers/colorScale';
 import ColorScaleLegend from '../../components/ColorScaleLegend';
@@ -38,6 +39,7 @@ function ConsumptionPhhView() {
   const resolution: PhhResolution = isPhhResolution(filters.phhResolution)
     ? filters.phhResolution
     : 'bundesland';
+  const boundaryOverrides = useBoundariesStore((s) => s.overrides);
 
   const { perBundesland, points } = useMemo(() => getPhhData(), []);
   const domain = useMemo(() => domainFor(perBundesland), [perBundesland]);
@@ -70,7 +72,7 @@ function ConsumptionPhhView() {
     }
     useLayersStore.getState().setLayers(layers);
     return () => useLayersStore.getState().clear();
-  }, [resolution, perBundesland, domain, points]);
+  }, [resolution, perBundesland, domain, points, boundaryOverrides]);
 
   const total = useMemo(() => {
     let s = 0;

@@ -1,7 +1,11 @@
 import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { GeoJsonLayer } from 'deck.gl';
-import { BUNDESLAENDER, bundeslandFeature } from '../../data/bundeslaender';
+import {
+  BUNDESLAENDER,
+  bundeslandFeature,
+  type BundeslandGeometry,
+} from '../../data/bundeslaender';
 import {
   POPULATION_FIRST_YEAR,
   POPULATION_LAST_YEAR,
@@ -12,6 +16,7 @@ import {
 } from '../../data/population';
 import { useAppStore } from '../../state/appStore';
 import { useLayersStore } from '../../state/layersStore';
+import { useBoundariesStore } from '../../state/boundariesStore';
 import {
   DIVERGING_RED_BLUE_STOPS,
   makeDivergingScale,
@@ -23,7 +28,7 @@ import EChart, { type EChartOption } from '../../components/EChart';
 interface FeatureWithGrowth {
   type: 'Feature';
   properties: { code: string; growth: number };
-  geometry: { type: 'Polygon'; coordinates: [number, number][][] };
+  geometry: BundeslandGeometry;
 }
 
 function formatPercent(v: number, locale: string): string {
@@ -39,6 +44,7 @@ function PopulationView() {
 
   const yearCandidate = typeof time === 'number' ? Math.round(time) : POPULATION_LAST_YEAR - 5;
   const year = Math.max(POPULATION_FIRST_YEAR, Math.min(POPULATION_LAST_YEAR, yearCandidate));
+  const boundaryOverrides = useBoundariesStore((s) => s.overrides);
 
   const data = useMemo(() => getPopulation(), []);
   const growth = useMemo(() => growthVsBaseline(data, year), [data, year]);
@@ -77,7 +83,7 @@ function PopulationView() {
     });
     useLayersStore.getState().setLayers([layer]);
     return () => useLayersStore.getState().clear();
-  }, [growth, maxAbs, year]);
+  }, [growth, maxAbs, year, boundaryOverrides]);
 
   const nationalNow = national[year - POPULATION_FIRST_YEAR] ?? 0;
   const nationalBase = national[0] ?? 0;
