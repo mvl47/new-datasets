@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EinheitenWind>
+  <EinheitWind>
+    <EinheitMastrNummer>SEE900000000000000010</EinheitMastrNummer>
+    <EinheitBetriebsStatus>35</EinheitBetriebsStatus>
+    <Laengengrad>9.7</Laengengrad>
+    <Breitengrad>54.2</Breitengrad>
+    <Nettonennleistung>3000</Nettonennleistung>
+    <Inbetriebnahmedatum>2016-11-30</Inbetriebnahmedatum>
+  </EinheitWind>
+  <EinheitWind>
+    <EinheitMastrNummer>SEE900000000000000011</EinheitMastrNummer>
+    <EinheitBetriebsStatus>35</EinheitBetriebsStatus>
+    <Laengengrad>13.4</Laengengrad>
+    <Breitengrad>52.0</Breitengrad>
+    <Nettonennleistung>4500</Nettonennleistung>
+    <Inbetriebnahmedatum>2022-03-10</Inbetriebnahmedatum>
+  </EinheitWind>
+</EinheitenWind>
