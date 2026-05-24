@@ -65,6 +65,20 @@
     "I": "Hospitality",
     "M": "Professional services"
   },
+  "weather": {
+    "description": "Climate normals per Bundesland — annual mean temperature or annual precipitation; climograph shows the monthly cycle.",
+    "temperature": "Temperature",
+    "precipitation": "Precipitation",
+    "climograph": "Climograph",
+    "annualMean": "Annual mean",
+    "annualPrecip": "Annual precipitation",
+    "clickHint": "Click a Bundesland on the map or pick from the dropdown.",
+    "legend": {
+      "temperature": "Annual mean temperature",
+      "precipitation": "Annual precipitation"
+    },
+    "mockNotice": "Schematic climate profiles — the pipeline ships validated DWD climate normals 1991-2020."
+  },
   "population": {
     "description": "Population development 2010–2030 — choropleth shows growth vs 2010 (red = decline, blue = growth).",
     "year": "Year",

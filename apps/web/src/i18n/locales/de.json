@@ -65,6 +65,20 @@
     "I": "Gastgewerbe",
     "M": "Freiberufliche Dienstleistungen"
   },
+  "weather": {
+    "description": "Klimanormale je Bundesland — Jahresmittel-Temperatur oder Jahresniederschlag. Klimadiagramm zeigt den Monatsgang.",
+    "temperature": "Temperatur",
+    "precipitation": "Niederschlag",
+    "climograph": "Klimadiagramm",
+    "annualMean": "Jahresmittel",
+    "annualPrecip": "Jahresniederschlag",
+    "clickHint": "Bundesland auf Karte klicken oder im Auswahlmenü wählen.",
+    "legend": {
+      "temperature": "Jahresmittel-Temperatur",
+      "precipitation": "Jahresniederschlag"
+    },
+    "mockNotice": "Schematische Klimaprofile — die Pipeline liefert validierte DWD-Klimanormalen 1991-2020."
+  },
   "population": {
     "description": "Bevölkerungsentwicklung 2010–2030 — Karte zeigt Wachstumsrate gegenüber 2010 (rot = Rückgang, blau = Zuwachs).",
     "year": "Jahr",

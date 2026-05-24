@@ -40,6 +40,8 @@ export interface ChoroplethLayerOptions {
   stops: ReadonlyArray<ColorStop>;
   domain: [number, number];
   opacity?: number;
+  highlightedCode?: BundeslandCode | null;
+  onSelect?: (code: BundeslandCode) => void;
 }
 
 export function buildChoroplethLayer({
@@ -48,6 +50,8 @@ export function buildChoroplethLayer({
   stops,
   domain,
   opacity = 0.8,
+  highlightedCode = null,
+  onSelect,
 }: ChoroplethLayerOptions): GeoJsonLayer<ChoroplethFeatureProps> {
   const fc = buildChoroplethFeatures(values);
   const scale = makeLinearScale(stops, domain);
@@ -60,8 +64,22 @@ export function buildChoroplethLayer({
     opacity,
     lineWidthUnits: 'pixels',
     lineWidthMinPixels: 1,
-    getLineWidth: 1,
+    getLineWidth: (f) =>
+      (f.properties as ChoroplethFeatureProps).code === highlightedCode ? 3 : 1,
     getFillColor: (f): RGB => scale((f.properties as ChoroplethFeatureProps).value),
-    getLineColor: [15, 23, 42, 220],
+    getLineColor: (f) =>
+      (f.properties as ChoroplethFeatureProps).code === highlightedCode
+        ? [245, 158, 11, 255]
+        : [15, 23, 42, 220],
+    updateTriggers: {
+      getLineWidth: [highlightedCode],
+      getLineColor: [highlightedCode],
+    },
+    onClick: onSelect
+      ? (info) => {
+          const code = (info.object?.properties as ChoroplethFeatureProps | undefined)?.code;
+          if (code) onSelect(code);
+        }
+      : undefined,
   });
 }
