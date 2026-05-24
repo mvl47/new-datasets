@@ -5,8 +5,11 @@ modeled on [solutions.ffe.de/products/solar](https://solutions.ffe.de/products/s
 
 ## Status
 
-PHASE 0 scaffold — navigable empty application shell. Datasets, mock data and
-the data pipeline ship in later phases.
+PHASE 1 — alle 11 Datensätze sind als interaktive Views implementiert, jeweils
+mit deterministisch generierten Mock-Daten. Karte (MapLibre + deck.gl),
+Choroplethen-Bundesländer-Geometrie, Klimadiagramm und 8760-h-Profile laufen.
+Die Python-Pipeline (echte Daten, PMTiles-Basemap, 100 m Raster) folgt in
+PHASE 2.
 
 ## Stack
 
@@ -39,19 +42,21 @@ docs/datasets/     README per dataset (later phases)
 
 ## The 11 datasets
 
-| # | Slug | Visualization |
-|---|---|---|
-| 1 | mastr-clean | Point map with before/after slider |
-| 2 | consumption-industry | Choropleth, WZ drill-down |
-| 3 | consumption-ghd | Choropleth + WZ-group donut |
-| 4 | consumption-phh | Choropleth + 100 m raster |
-| 5 | potential-pv-ground | Polygon-sharp + 3D extrusion |
-| 6 | potential-wind-onshore | Polygon-sharp + WiSTL overlay |
-| 7 | potential-wind-offshore | Raster heatmap (bathymetric basemap) |
-| 8 | timeseries-pv | Choropleth + 8760 h line chart |
-| 9 | timeseries-wind | Choropleth + on/offshore toggle |
-| 10 | population | Choropleth growth rate + time slider |
-| 11 | weather | Choropleth + climate diagram |
+All shipped in PHASE 1 (mock data — real data pipeline is PHASE 2).
+
+| # | Slug | Pattern | Distinctive interaction |
+|---|---|---|---|
+| 1 | mastr-clean | ScatterplotLayer | Before/After slider; raw vs cleaned MaStR |
+| 2 | consumption-industry | Choropleth (oranges) | WZ section drill-down |
+| 3 | consumption-ghd | Choropleth (blues) + donut | National GHD split, group selector |
+| 4 | consumption-phh | Choropleth / HeatmapLayer | Bundesland ↔ Raster toggle |
+| 5 | potential-pv-ground | PolygonLayer | 2D ↔ 3D extrusion, min-capacity filter |
+| 6 | potential-wind-onshore | Polygons + ScatterplotLayer | Flächen / Anlagen / Beides toggle (WiSTL overlay) |
+| 7 | potential-wind-offshore | HeatmapLayer + parks | Nordsee / Ostsee / Beides filter |
+| 8 | timeseries-pv | Choropleth + line chart | 8760-h slider drives both views |
+| 9 | timeseries-wind | Choropleth + line chart | Onshore / Offshore toggle |
+| 10 | population | Diverging choropleth + line | Year slider 2010–2030 |
+| 11 | weather | Choropleth + climograph | Metric toggle, click-to-select Bundesland |
 
 ## Basemap
 
