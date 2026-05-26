@@ -1,0 +1,103 @@
+{
+  "version": 8,
+  "name": "FfE Dark",
+  "metadata": {
+    "ffe:variant": "dark",
+    "ffe:source": "Protomaps PMTiles (self-hosted) — set VITE_BASEMAP_PMTILES to override"
+  },
+  "glyphs": "https://protomaps.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf",
+  "sources": {
+    "protomaps": {
+      "type": "vector",
+      "url": "pmtiles:///tiles/germany.pmtiles",
+      "attribution": "© <a href=\"https://openstreetmap.org\">OpenStreetMap</a> · © <a href=\"https://protomaps.com\">Protomaps</a>"
+    }
+  },
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "paint": { "background-color": "#020617" }
+    },
+    {
+      "id": "earth",
+      "type": "fill",
+      "source": "protomaps",
+      "source-layer": "earth",
+      "paint": { "fill-color": "#0f172a" }
+    },
+    {
+      "id": "landuse_park",
+      "type": "fill",
+      "source": "protomaps",
+      "source-layer": "landuse",
+      "filter": ["==", ["get", "kind"], "park"],
+      "paint": { "fill-color": "#1e293b" }
+    },
+    {
+      "id": "landuse_forest",
+      "type": "fill",
+      "source": "protomaps",
+      "source-layer": "natural",
+      "filter": ["==", ["get", "kind"], "forest"],
+      "paint": { "fill-color": "#1a2e1f" }
+    },
+    {
+      "id": "water",
+      "type": "fill",
+      "source": "protomaps",
+      "source-layer": "water",
+      "paint": { "fill-color": "#0c2742" }
+    },
+    {
+      "id": "roads_minor",
+      "type": "line",
+      "source": "protomaps",
+      "source-layer": "roads",
+      "minzoom": 9,
+      "filter": ["in", ["get", "kind"], ["literal", ["minor", "service"]]],
+      "paint": { "line-color": "#1e293b", "line-width": 0.5 }
+    },
+    {
+      "id": "roads_major",
+      "type": "line",
+      "source": "protomaps",
+      "source-layer": "roads",
+      "filter": ["in", ["get", "kind"], ["literal", ["highway", "major"]]],
+      "paint": { "line-color": "#334155", "line-width": 1 }
+    },
+    {
+      "id": "boundaries_country",
+      "type": "line",
+      "source": "protomaps",
+      "source-layer": "boundaries",
+      "filter": ["==", ["get", "kind"], "country"],
+      "paint": { "line-color": "#64748b", "line-width": 1.2 }
+    },
+    {
+      "id": "boundaries_region",
+      "type": "line",
+      "source": "protomaps",
+      "source-layer": "boundaries",
+      "filter": ["==", ["get", "kind"], "region"],
+      "paint": { "line-color": "#334155", "line-width": 0.6, "line-dasharray": [3, 1] }
+    },
+    {
+      "id": "places_locality",
+      "type": "symbol",
+      "source": "protomaps",
+      "source-layer": "places",
+      "filter": ["in", ["get", "kind"], ["literal", ["locality", "city"]]],
+      "layout": {
+        "text-field": ["coalesce", ["get", "name:latin"], ["get", "name"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 5, 10, 10, 14]
+      },
+      "paint": {
+        "text-color": "#e2e8f0",
+        "text-halo-color": "rgba(2,6,23,0.9)",
+        "text-halo-width": 1.2
+      }
+    }
+  ]
+}

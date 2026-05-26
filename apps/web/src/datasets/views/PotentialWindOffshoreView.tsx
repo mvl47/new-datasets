@@ -12,6 +12,7 @@ import {
 } from '../../data/potentialWindOffshore';
 import { useAppStore } from '../../state/appStore';
 import { useLayersStore } from '../../state/layersStore';
+import { renderTooltip } from '../../layers/tooltip';
 
 const OFFSHORE_COLOR_RANGE: Array<[number, number, number, number]> = [
   [12, 74, 110, 0],
@@ -81,9 +82,19 @@ function PotentialWindOffshoreView() {
         lineWidthMinPixels: 0.5,
       }),
     ];
-    useLayersStore.getState().setLayers(layers);
+    useLayersStore.getState().setLayers(layers, (info) => {
+      const park = info.object as
+        | { name?: string; capacityMw?: number; status?: 'operational' | 'planned'; sea?: 'north' | 'baltic' }
+        | undefined;
+      if (!park?.name) return null;
+      const statusKey = park.status === 'planned' ? 'windOff.planned' : 'windOff.operational';
+      return renderTooltip(park.name, [
+        { label: t(statusKey), value: `${formatNumber(park.capacityMw ?? 0, locale)} MW` },
+        ...(park.sea ? [{ label: t('view.datasetName'), value: t(`windOff.sea.${park.sea}`) }] : []),
+      ]);
+    });
     return () => useLayersStore.getState().clear();
-  }, [visiblePoints, visibleParks]);
+  }, [visiblePoints, visibleParks, locale, t]);
 
   return (
     <div className="pointer-events-auto absolute right-4 top-4 w-80 max-w-[calc(100vw-2rem)] rounded-lg bg-white/95 p-4 shadow-lg ring-1 ring-slate-200 dark:bg-slate-900/95 dark:text-slate-100 dark:ring-slate-700">

@@ -23,6 +23,7 @@ import {
   makeDivergingScale,
   type RGB,
 } from '../../layers/colorScale';
+import { renderTooltip } from '../../layers/tooltip';
 import ColorScaleLegend from '../../components/ColorScaleLegend';
 import EChart, { type EChartOption } from '../../components/EChart';
 
@@ -88,9 +89,19 @@ function PopulationView() {
         scale((f.properties as { growth: number }).growth),
       getLineColor: [15, 23, 42, 220],
     });
-    useLayersStore.getState().setLayers([layer]);
+    useLayersStore.getState().setLayers([layer], (info) => {
+      const obj = info.object as { properties?: { code?: string; growth?: number } } | undefined;
+      const p = obj?.properties;
+      if (!p?.code) return null;
+      const meta = BUNDESLAENDER.find((b) => b.code === p.code);
+      const name = meta ? (locale === 'de-DE' ? meta.nameDe : meta.nameEn) : p.code;
+      return renderTooltip(name, [
+        { label: t('population.vsBaseline'), value: formatPercent(p.growth ?? 0, locale) },
+        { label: t('population.year'), value: String(year) },
+      ]);
+    });
     return () => useLayersStore.getState().clear();
-  }, [growth, maxAbs, year, boundaryOverrides]);
+  }, [growth, maxAbs, year, boundaryOverrides, locale, t]);
 
   const nationalNow = national[year - POPULATION_FIRST_YEAR] ?? 0;
   const nationalBase = national[0] ?? 0;

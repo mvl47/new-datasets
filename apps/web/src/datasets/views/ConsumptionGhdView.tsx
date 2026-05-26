@@ -14,6 +14,7 @@ import { useLayersStore } from '../../state/layersStore';
 import { useBoundariesStore } from '../../state/boundariesStore';
 import { buildChoroplethLayer } from '../../layers/choropleth';
 import { BLUES_STOPS } from '../../layers/colorScale';
+import { renderTooltip } from '../../layers/tooltip';
 import ColorScaleLegend from '../../components/ColorScaleLegend';
 import EChart, { type EChartOption } from '../../components/EChart';
 
@@ -51,9 +52,18 @@ function ConsumptionGhdView() {
       stops: BLUES_STOPS,
       domain,
     });
-    useLayersStore.getState().setLayers([layer]);
+    useLayersStore.getState().setLayers([layer], (info) => {
+      const obj = info.object as { properties?: { code?: string; nameDe?: string; nameEn?: string; value?: number } } | undefined;
+      const p = obj?.properties;
+      if (!p?.code) return null;
+      const name = locale === 'de-DE' ? (p.nameDe ?? p.code) : (p.nameEn ?? p.code);
+      const groupLabel = group === 'TOTAL' ? t('ghd.total') : `WZ ${group}`;
+      return renderTooltip(name, [
+        { label: groupLabel, value: `${formatGwh(p.value ?? 0, locale)} GWh` },
+      ]);
+    });
     return () => useLayersStore.getState().clear();
-  }, [values, domain, group, boundaryOverrides]);
+  }, [values, domain, group, boundaryOverrides, locale, t]);
 
   const total = useMemo(() => {
     let s = 0;

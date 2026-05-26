@@ -12,6 +12,7 @@ import { useAppStore } from '../../state/appStore';
 import { useLayersStore } from '../../state/layersStore';
 import { useMastrStore } from '../../state/mastrStore';
 import { buildMastrScatterLayer } from '../../layers/mastrLayers';
+import { renderTooltip } from '../../layers/tooltip';
 import BeforeAfterSlider from '../../components/BeforeAfterSlider';
 import Legend from '../../components/Legend';
 
@@ -50,9 +51,26 @@ function MastrCleanView() {
 
   useEffect(() => {
     const layer = buildMastrScatterLayer(plants, variant);
-    useLayersStore.getState().setLayers([layer]);
+    useLayersStore.getState().setLayers([layer], (info) => {
+      const plant = info.object as
+        | { id: string; tech: string; capacityKw: number; commissioningYear?: number }
+        | undefined;
+      if (!plant) return null;
+      const techLabel = t(`mastr.tech.${plant.tech}`);
+      const capacity =
+        plant.capacityKw >= 1000
+          ? `${formatInt(Math.round(plant.capacityKw / 1000), locale)} MW`
+          : `${formatInt(Math.round(plant.capacityKw), locale)} kW`;
+      const rows = [
+        { label: t('mastr.capacity'), value: capacity },
+        ...(plant.commissioningYear
+          ? [{ label: t('mastr.commissioning'), value: String(plant.commissioningYear) }]
+          : []),
+      ];
+      return renderTooltip(`${techLabel} · ${plant.id}`, rows);
+    });
     return () => useLayersStore.getState().clear();
-  }, [plants, variant]);
+  }, [plants, variant, locale, t]);
 
   const removed = rawStats.total - cleanedStats.total;
   const removedPct = rawStats.total > 0 ? (-removed / rawStats.total) * 100 : 0;

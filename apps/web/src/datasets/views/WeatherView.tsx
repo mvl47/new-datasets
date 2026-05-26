@@ -15,6 +15,7 @@ import { useBoundariesStore } from '../../state/boundariesStore';
 import { useWeatherStore } from '../../state/weatherStore';
 import { buildChoroplethLayer } from '../../layers/choropleth';
 import { BLUES_STOPS, ORANGES_STOPS } from '../../layers/colorScale';
+import { renderTooltip } from '../../layers/tooltip';
 import ColorScaleLegend from '../../components/ColorScaleLegend';
 import EChart, { type EChartOption } from '../../components/EChart';
 
@@ -53,9 +54,22 @@ function WeatherView() {
       highlightedCode: selected,
       onSelect: (code) => patchFilters({ weatherSelected: code }),
     });
-    useLayersStore.getState().setLayers([layer]);
+    useLayersStore.getState().setLayers([layer], (info) => {
+      const obj = info.object as { properties?: { code?: string; nameDe?: string; nameEn?: string; value?: number } } | undefined;
+      const p = obj?.properties;
+      if (!p?.code) return null;
+      const name = locale === 'de-DE' ? (p.nameDe ?? p.code) : (p.nameEn ?? p.code);
+      const unit = metric === 'temperature' ? '°C' : 'mm/a';
+      const formatted =
+        metric === 'temperature'
+          ? new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(p.value ?? 0)
+          : new Intl.NumberFormat(locale).format(Math.round(p.value ?? 0));
+      return renderTooltip(name, [
+        { label: t(`weather.${metric}`), value: `${formatted} ${unit}` },
+      ]);
+    });
     return () => useLayersStore.getState().clear();
-  }, [metric, values, domain, stops, selected, patchFilters, boundaryOverrides]);
+  }, [metric, values, domain, stops, selected, patchFilters, boundaryOverrides, locale, t]);
 
   const activeCode: BundeslandCode = selected ?? 'BY';
   const activeMeta = BUNDESLAENDER.find((b) => b.code === activeCode);

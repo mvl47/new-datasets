@@ -16,6 +16,7 @@ import { useLayersStore } from '../../state/layersStore';
 import { useBoundariesStore } from '../../state/boundariesStore';
 import { buildChoroplethLayer } from '../../layers/choropleth';
 import { BLUES_STOPS } from '../../layers/colorScale';
+import { renderTooltip } from '../../layers/tooltip';
 import ColorScaleLegend from '../../components/ColorScaleLegend';
 
 const HEATMAP_COLOR_RANGE: Array<[number, number, number, number]> = [
@@ -70,9 +71,23 @@ function ConsumptionPhhView() {
         }),
       );
     }
-    useLayersStore.getState().setLayers(layers);
+    const tooltipFn =
+      resolution === 'bundesland'
+        ? (info: { object?: unknown }) => {
+            const obj = info.object as
+              | { properties?: { code?: string; nameDe?: string; nameEn?: string; value?: number } }
+              | undefined;
+            const p = obj?.properties;
+            if (!p?.code) return null;
+            const name = locale === 'de-DE' ? (p.nameDe ?? p.code) : (p.nameEn ?? p.code);
+            return renderTooltip(name, [
+              { label: t('phh.totalLabel'), value: `${formatGwh(p.value ?? 0, locale)} GWh` },
+            ]);
+          }
+        : null;
+    useLayersStore.getState().setLayers(layers, tooltipFn);
     return () => useLayersStore.getState().clear();
-  }, [resolution, perBundesland, domain, points, boundaryOverrides]);
+  }, [resolution, perBundesland, domain, points, boundaryOverrides, locale, t]);
 
   const total = useMemo(() => {
     let s = 0;

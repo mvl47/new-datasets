@@ -11,6 +11,7 @@ import {
 import { useAppStore } from '../../state/appStore';
 import { useLayersStore } from '../../state/layersStore';
 import { makeLinearScale, BLUES_STOPS, type RGB } from '../../layers/colorScale';
+import { renderTooltip } from '../../layers/tooltip';
 
 const VIEW_MODES = ['areas', 'turbines', 'both'] as const;
 type ViewMode = (typeof VIEW_MODES)[number];
@@ -88,9 +89,25 @@ function PotentialWindOnshoreView() {
         }),
       );
     }
-    useLayersStore.getState().setLayers(layers);
+    useLayersStore.getState().setLayers(layers, (info) => {
+      if (!info.object) return null;
+      const layerId = info.layer?.id ?? '';
+      if (layerId.includes('areas')) {
+        const a = info.object as { id: string; capacityMw: number; areaKm2: number; meanWindMs: number };
+        return renderTooltip(`Wind · ${a.id}`, [
+          { label: t('windOn.capacity'), value: `${formatNumber(a.capacityMw, locale)} MW` },
+          { label: t('windOn.area'), value: `${formatNumber(a.areaKm2, locale)} km²` },
+          { label: t('windOn.meanWind'), value: `${formatMs(a.meanWindMs, locale)} m/s` },
+        ]);
+      }
+      const t2 = info.object as { id: string; capacityKw: number; hubHeightM: number };
+      return renderTooltip(t2.id, [
+        { label: t('windOn.capacity'), value: `${formatNumber(t2.capacityKw, locale)} kW` },
+        { label: t('windOn.hubHeight'), value: `${formatNumber(t2.hubHeightM, locale)} m` },
+      ]);
+    });
     return () => useLayersStore.getState().clear();
-  }, [areas, turbines, viewMode, colorScale]);
+  }, [areas, turbines, viewMode, colorScale, locale, t]);
 
   return (
     <div className="pointer-events-auto absolute right-4 top-4 w-80 max-w-[calc(100vw-2rem)] rounded-lg bg-white/95 p-4 shadow-lg ring-1 ring-slate-200 dark:bg-slate-900/95 dark:text-slate-100 dark:ring-slate-700">

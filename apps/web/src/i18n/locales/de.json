@@ -143,6 +143,7 @@
     "area": "Fläche",
     "meanWind": "Mittl. Wind",
     "turbines": "WiSTL-Anlagen",
+    "hubHeight": "Nabenhöhe",
     "wistlNote": "Bestandsanlagen — gelb",
     "mockNotice": "Schematische Mock-Polygone — die Pipeline liefert echte WiSTL-Daten + Eignungsflächen.",
     "view": {
@@ -158,6 +159,7 @@
     "capacity": "Kapazität",
     "yield": "Jahresertrag",
     "area": "Fläche",
+    "suitability": "Eignungs-Score",
     "leader": "Spitzenreiter",
     "mockNotice": "Schematische Mock-Polygone — die Pipeline liefert echte Eignungsflächen (Solar-Solutions-Methodik).",
     "mode": {
@@ -208,6 +210,7 @@
     "toggleAria": "Zwischen Roh- und bereinigten Daten umschalten",
     "plants": "Anlagen",
     "capacity": "Installierte Leistung",
+    "commissioning": "Inbetriebnahme",
     "byTech": "Nach Technologie",
     "legend": "Technologie",
     "cleaningImpact": "Bereinigung entfernt {{removed}} Datensätze ({{pct}}).",

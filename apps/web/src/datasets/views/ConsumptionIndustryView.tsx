@@ -14,6 +14,7 @@ import { useLayersStore } from '../../state/layersStore';
 import { useBoundariesStore } from '../../state/boundariesStore';
 import { buildChoroplethLayer } from '../../layers/choropleth';
 import { ORANGES_STOPS } from '../../layers/colorScale';
+import { renderTooltip } from '../../layers/tooltip';
 import ColorScaleLegend from '../../components/ColorScaleLegend';
 
 function formatGwh(value: number, locale: string): string {
@@ -40,9 +41,18 @@ function ConsumptionIndustryView() {
       stops: ORANGES_STOPS,
       domain,
     });
-    useLayersStore.getState().setLayers([layer]);
+    useLayersStore.getState().setLayers([layer], (info) => {
+      const obj = info.object as { properties?: { code?: string; nameDe?: string; nameEn?: string; value?: number } } | undefined;
+      const p = obj?.properties;
+      if (!p?.code) return null;
+      const name = locale === 'de-DE' ? (p.nameDe ?? p.code) : (p.nameEn ?? p.code);
+      const sectionLabel = section === 'TOTAL' ? t('consumptionIndustry.total') : `WZ ${section}`;
+      return renderTooltip(name, [
+        { label: sectionLabel, value: `${formatGwh(p.value ?? 0, locale)} GWh` },
+      ]);
+    });
     return () => useLayersStore.getState().clear();
-  }, [values, domain, section, boundaryOverrides]);
+  }, [values, domain, section, boundaryOverrides, locale, t]);
 
   const sorted = useMemo(() => {
     const list = BUNDESLAENDER.map((b) => ({

@@ -143,6 +143,7 @@
     "area": "Area",
     "meanWind": "Mean wind",
     "turbines": "WiSTL turbines",
+    "hubHeight": "Hub height",
     "wistlNote": "Existing turbines — amber",
     "mockNotice": "Schematic mock polygons — the pipeline ships real WiSTL data + suitability areas.",
     "view": {
@@ -158,6 +159,7 @@
     "capacity": "Capacity",
     "yield": "Annual yield",
     "area": "Area",
+    "suitability": "Suitability score",
     "leader": "Leader",
     "mockNotice": "Schematic mock polygons — the pipeline ships real suitability areas (solar solutions methodology).",
     "mode": {
@@ -207,6 +209,7 @@
     "toggleAria": "Toggle between raw and cleaned data",
     "plants": "Plants",
     "capacity": "Installed capacity",
+    "commissioning": "Commissioned",
     "byTech": "By technology",
     "legend": "Technology",
     "cleaningImpact": "Cleaning removes {{removed}} records ({{pct}}).",

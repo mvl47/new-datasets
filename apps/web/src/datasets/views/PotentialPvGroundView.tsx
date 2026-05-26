@@ -12,6 +12,7 @@ import { BUNDESLAENDER } from '../../data/bundeslaender';
 import { useAppStore } from '../../state/appStore';
 import { useLayersStore } from '../../state/layersStore';
 import { makeLinearScale, ORANGES_STOPS, type RGB } from '../../layers/colorScale';
+import { renderTooltip } from '../../layers/tooltip';
 
 const VIEW_MODES = ['flat', 'extruded'] as const;
 type ViewMode = (typeof VIEW_MODES)[number];
@@ -67,9 +68,20 @@ function PotentialPvGroundView() {
       opacity: viewMode === 'extruded' ? 0.9 : 0.75,
     });
     const layers: Layer[] = [layer];
-    useLayersStore.getState().setLayers(layers);
+    useLayersStore.getState().setLayers(layers, (info) => {
+      const site = info.object as
+        | { id: string; capacityMwp: number; yieldGwh: number; areaHa: number; suitability: number }
+        | undefined;
+      if (!site) return null;
+      return renderTooltip(`PV · ${site.id}`, [
+        { label: t('pv.capacity'), value: `${formatNumber(site.capacityMwp, locale)} MWp` },
+        { label: t('pv.yield'), value: `${formatNumber(site.yieldGwh, locale)} GWh` },
+        { label: t('pv.area'), value: `${formatNumber(site.areaHa, locale)} ha` },
+        { label: t('pv.suitability'), value: `${site.suitability}` },
+      ]);
+    });
     return () => useLayersStore.getState().clear();
-  }, [filtered, viewMode, colorScale]);
+  }, [filtered, viewMode, colorScale, locale, t]);
 
   const topBundesland = useMemo(() => {
     let topCode: string | null = null;

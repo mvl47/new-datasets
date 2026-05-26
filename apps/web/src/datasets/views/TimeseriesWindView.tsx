@@ -16,6 +16,7 @@ import { useBoundariesStore } from '../../state/boundariesStore';
 import { useTimeseriesStore } from '../../state/timeseriesStore';
 import { buildChoroplethLayer } from '../../layers/choropleth';
 import { BLUES_STOPS } from '../../layers/colorScale';
+import { renderTooltip } from '../../layers/tooltip';
 import EChart, { type EChartOption } from '../../components/EChart';
 import ColorScaleLegend from '../../components/ColorScaleLegend';
 
@@ -59,9 +60,18 @@ function TimeseriesWindView() {
       stops: BLUES_STOPS,
       domain: peakDomain,
     });
-    useLayersStore.getState().setLayers([layer]);
+    useLayersStore.getState().setLayers([layer], (info) => {
+      const obj = info.object as { properties?: { code?: string; nameDe?: string; nameEn?: string; value?: number } } | undefined;
+      const p = obj?.properties;
+      if (!p?.code) return null;
+      const name = locale === 'de-DE' ? (p.nameDe ?? p.code) : (p.nameEn ?? p.code);
+      return renderTooltip(name, [
+        { label: t(`tsWind.kind.${kind}`), value: `${formatNumber(p.value ?? 0, locale)} MW` },
+        { label: t('tsWind.hour'), value: dateLabel(hour, locale) },
+      ]);
+    });
     return () => useLayersStore.getState().clear();
-  }, [currentValues, peakDomain, kind, hour, boundaryOverrides]);
+  }, [currentValues, peakDomain, kind, hour, boundaryOverrides, locale, t]);
 
   const seriesPoints = useMemo(() => {
     const pts = new Array<[number, number]>(national.length);
