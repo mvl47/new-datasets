@@ -45,8 +45,9 @@ export interface BundeslandClimate {
 }
 
 let cached: Record<BundeslandCode, BundeslandClimate> | null = null;
+let override: Record<BundeslandCode, BundeslandClimate> | null = null;
 
-export function getWeather(): Record<BundeslandCode, BundeslandClimate> {
+function computeMockClimate(): Record<BundeslandCode, BundeslandClimate> {
   if (cached) return cached;
   const out = {} as Record<BundeslandCode, BundeslandClimate>;
   for (const b of BUNDESLAENDER) {
@@ -70,6 +71,20 @@ export function getWeather(): Record<BundeslandCode, BundeslandClimate> {
   }
   cached = out;
   return out;
+}
+
+export function setWeatherOverride(
+  data: Partial<Record<BundeslandCode, BundeslandClimate>> | null,
+): void {
+  if (!data) {
+    override = null;
+    return;
+  }
+  override = { ...computeMockClimate(), ...data } as Record<BundeslandCode, BundeslandClimate>;
+}
+
+export function getWeather(): Record<BundeslandCode, BundeslandClimate> {
+  return override ?? computeMockClimate();
 }
 
 export function isWeatherMetric(value: unknown): value is WeatherMetric {

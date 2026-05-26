@@ -1,0 +1,5 @@
+Stations_id von_datum bis_datum Stationshoehe geoBreite geoLaenge Stationsname Bundesland
+----------- --------- --------- ------------- --------- ---------- ------------------- ------------
+00001        19911201 20201231          515.0   48.7000     8.5000 Freiburg            Baden-Wuerttemberg
+00002        19911201 20201231          257.0   48.1372    11.5755 Muenchen            Bayern
+00003        19911201 20201231           36.0   52.5167    13.4000 Berlin              Berlin

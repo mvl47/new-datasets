@@ -10,6 +10,7 @@ import { loadBoundaries } from './data/loadBoundaries';
 import { loadPopulation } from './data/loadPopulation';
 import { loadMastr } from './data/loadMastr';
 import { loadTimeseriesPv, loadTimeseriesWindOnshore } from './data/loadTimeseries';
+import { loadWeather } from './data/loadWeather';
 import './i18n';
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
     void loadMastr();
     void loadTimeseriesPv();
     void loadTimeseriesWindOnshore();
+    void loadWeather();
   }, []);
 
   return (

@@ -78,7 +78,8 @@
       "temperature": "Jahresmittel-Temperatur",
       "precipitation": "Jahresniederschlag"
     },
-    "mockNotice": "Schematische Klimaprofile — die Pipeline liefert validierte DWD-Klimanormalen 1991-2020."
+    "mockNotice": "Schematische Klimaprofile — die Pipeline liefert validierte DWD-Klimanormalen 1991-2020.",
+    "realNotice": "Quelle: DWD Klimanormalen 1991–2020 — Stationen je Bundesland gemittelt."
   },
   "population": {
     "description": "Bevölkerungsentwicklung 2010–2030 — Karte zeigt Wachstumsrate gegenüber 2010 (rot = Rückgang, blau = Zuwachs).",

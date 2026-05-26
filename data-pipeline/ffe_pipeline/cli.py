@@ -64,5 +64,14 @@ def era5(force: bool, variable: str) -> None:
     run_era5(force=force, variable=variable)
 
 
+@cli.command()
+@click.option("--force", is_flag=True, help="Ignore the cache and re-download DWD.")
+def weather(force: bool) -> None:
+    """Fetch DWD climate normals 1991-2020 and emit weather.json."""
+    from .dwd import run_weather
+
+    run_weather(force=force)
+
+
 if __name__ == "__main__":
     cli()

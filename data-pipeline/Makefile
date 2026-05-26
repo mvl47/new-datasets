@@ -1,4 +1,4 @@
-.PHONY: help install boundaries mastr destatis era5 all clean test lint format
+.PHONY: help install boundaries mastr destatis era5 weather all clean test lint format
 
 PY ?= uv run --no-sync python
 UV ?= uv
@@ -10,7 +10,8 @@ help:
 	@echo "  make mastr       MaStR bulk → apps/web/public/data/mastr-clean.geojson"
 	@echo "  make destatis    GENESIS → apps/web/public/data/population.json"
 	@echo "  make era5        ERA5 → apps/web/public/data/timeseries-{pv,wind}.json"
-	@echo "  make all         everything above (boundaries, mastr, destatis, era5)"
+	@echo "  make weather     DWD → apps/web/public/data/weather.json"
+	@echo "  make all         everything above"
 	@echo "  make test        pytest"
 	@echo "  make lint        ruff check"
 	@echo "  make format      ruff format"
@@ -31,7 +32,10 @@ destatis:
 era5:
 	$(PY) -m ffe_pipeline.cli era5
 
-all: boundaries mastr destatis era5
+weather:
+	$(PY) -m ffe_pipeline.cli weather
+
+all: boundaries mastr destatis era5 weather
 
 test:
 	$(PY) -m pytest

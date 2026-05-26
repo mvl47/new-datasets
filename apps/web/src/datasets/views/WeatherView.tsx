@@ -12,6 +12,7 @@ import { domainFor } from '../../data/consumptionIndustry';
 import { useAppStore } from '../../state/appStore';
 import { useLayersStore } from '../../state/layersStore';
 import { useBoundariesStore } from '../../state/boundariesStore';
+import { useWeatherStore } from '../../state/weatherStore';
 import { buildChoroplethLayer } from '../../layers/choropleth';
 import { BLUES_STOPS, ORANGES_STOPS } from '../../layers/colorScale';
 import ColorScaleLegend from '../../components/ColorScaleLegend';
@@ -34,8 +35,10 @@ function WeatherView() {
     ? filters.weatherSelected
     : null;
   const boundaryOverrides = useBoundariesStore((s) => s.overrides);
+  const weatherStatus = useWeatherStore((s) => s.status);
 
-  const climate = useMemo(() => getWeather(), []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const climate = useMemo(() => getWeather(), [weatherStatus]);
   const values = useMemo(() => valuesForMetric(climate, metric), [climate, metric]);
   const domain = useMemo(() => domainFor(values), [values]);
 
@@ -188,7 +191,7 @@ function WeatherView() {
         )}
 
         <p className="mt-3 text-[10px] italic text-slate-400 dark:text-slate-500">
-          {t('weather.mockNotice')}
+          {weatherStatus === 'loaded' ? t('weather.realNotice') : t('weather.mockNotice')}
         </p>
       </div>
       <ColorScaleLegend
