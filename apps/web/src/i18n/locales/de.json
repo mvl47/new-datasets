@@ -28,7 +28,8 @@
   "view": {
     "datasetName": "Datensatz",
     "vizType": "Visualisierungstyp",
-    "phase0Notice": "PHASE 0 — Platzhalter. Echte Layer und Daten folgen in den nächsten Phasen."
+    "phase0Notice": "PHASE 0 — Platzhalter. Echte Layer und Daten folgen in den nächsten Phasen.",
+    "loading": "Lade Datensatz …"
   },
   "viz": {
     "points": "Punktkarte",

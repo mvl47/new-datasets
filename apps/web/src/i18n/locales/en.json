@@ -28,7 +28,8 @@
   "view": {
     "datasetName": "Dataset",
     "vizType": "Visualization type",
-    "phase0Notice": "PHASE 0 — placeholder. Real layers and data ship in later phases."
+    "phase0Notice": "PHASE 0 — placeholder. Real layers and data ship in later phases.",
+    "loading": "Loading dataset…"
   },
   "viz": {
     "points": "Point map",
