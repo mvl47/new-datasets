@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "bundle-size": "node scripts/check-bundle-size.mjs"
   },
   "dependencies": {
     "@deck.gl/core": "^9.3.0",

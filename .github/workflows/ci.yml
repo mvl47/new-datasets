@@ -40,6 +40,9 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Bundle size budget
+        run: pnpm bundle-size
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:

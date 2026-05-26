@@ -11,6 +11,7 @@
     "preview": "pnpm --filter web preview",
     "lint": "pnpm --filter web lint",
     "format": "pnpm --filter web format",
-    "test": "pnpm --filter web test"
+    "test": "pnpm --filter web test",
+    "bundle-size": "pnpm --filter web bundle-size"
   }
 }
