@@ -52,9 +52,7 @@ def _write_polygons(tmp_path: Path) -> Path:
 
 
 def test_parse_stations_reads_lat_lon() -> None:
-    stations = dwd.parse_stations(
-        (FIXTURES / "stations.txt").read_text(encoding="utf-8")
-    )
+    stations = dwd.parse_stations((FIXTURES / "stations.txt").read_text(encoding="utf-8"))
     assert len(stations) == 3
     by_id = {s.id: s for s in stations}
     assert by_id[2].lat == 48.1372
@@ -62,9 +60,7 @@ def test_parse_stations_reads_lat_lon() -> None:
 
 
 def test_parse_monthly_normals_skips_sentinel_rows() -> None:
-    rows = dwd.parse_monthly_normals(
-        (FIXTURES / "temperature.txt").read_text(encoding="utf-8")
-    )
+    rows = dwd.parse_monthly_normals((FIXTURES / "temperature.txt").read_text(encoding="utf-8"))
     ids = {r.station_id for r in rows}
     assert ids == {1, 2, 3}
     assert all(len(r.values) == 12 for r in rows)
@@ -72,9 +68,7 @@ def test_parse_monthly_normals_skips_sentinel_rows() -> None:
 
 def test_assign_stations_uses_polygon_containment(tmp_path: Path) -> None:
     polygons = dwd.load_bundesland_polygons(_write_polygons(tmp_path))
-    stations = dwd.parse_stations(
-        (FIXTURES / "stations.txt").read_text(encoding="utf-8")
-    )
+    stations = dwd.parse_stations((FIXTURES / "stations.txt").read_text(encoding="utf-8"))
     assignment = dwd.assign_stations_to_bundeslaender(stations, polygons)
     assert assignment["BW"] == [1]
     assert assignment["BY"] == [2]
@@ -84,9 +78,7 @@ def test_assign_stations_uses_polygon_containment(tmp_path: Path) -> None:
 def test_average_monthly_per_bundesland_means_across_stations(tmp_path: Path) -> None:
     polygons = dwd.load_bundesland_polygons(_write_polygons(tmp_path))
     stations = dwd.parse_stations((FIXTURES / "stations.txt").read_text(encoding="utf-8"))
-    monthly = dwd.parse_monthly_normals(
-        (FIXTURES / "temperature.txt").read_text(encoding="utf-8")
-    )
+    monthly = dwd.parse_monthly_normals((FIXTURES / "temperature.txt").read_text(encoding="utf-8"))
     means = dwd.average_monthly_per_bundesland(
         dwd.assign_stations_to_bundeslaender(stations, polygons), monthly
     )
@@ -105,9 +97,7 @@ def test_shape_for_web_emits_per_bl_monthly_and_aggregates(tmp_path: Path) -> No
     )
     precips = dwd.average_monthly_per_bundesland(
         assignment,
-        dwd.parse_monthly_normals(
-            (FIXTURES / "precipitation.txt").read_text(encoding="utf-8")
-        ),
+        dwd.parse_monthly_normals((FIXTURES / "precipitation.txt").read_text(encoding="utf-8")),
     )
     payload = dwd.shape_for_web(temps, precips)
     by = payload["byBundesland"]

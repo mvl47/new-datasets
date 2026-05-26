@@ -108,10 +108,12 @@ def parse_einheiten_stream(xml_path: Path, tech: str) -> Iterator[MastrPlant]:
     context = etree.iterparse(str(xml_path), events=("end",), recover=True)
     for _, elem in context:
         tag = etree.QName(elem.tag).localname
-        if not tag.startswith("EinheitSolar")  \
-            and not tag.startswith("EinheitWind") \
-            and not tag.startswith("EinheitBiomasse") \
-            and not tag.startswith("EinheitWasser"):
+        if (
+            not tag.startswith("EinheitSolar")
+            and not tag.startswith("EinheitWind")
+            and not tag.startswith("EinheitBiomasse")
+            and not tag.startswith("EinheitWasser")
+        ):
             continue
         status = _text(elem, STATUS_FIELDS)
         if status in DECOMMISSIONED_STATUS:

@@ -55,7 +55,5 @@ def test_aggregate_per_bundesland_pv_with_clear_sky() -> None:
 
 def test_aggregate_per_bundesland_pv_night_returns_zero() -> None:
     ssrd = np.zeros((4, 1, 1))
-    out = era5.aggregate_per_bundesland_pv(
-        ssrd, {"BY": ([0], [0])}, capacities={"BY": 1000.0}
-    )
+    out = era5.aggregate_per_bundesland_pv(ssrd, {"BY": ([0], [0])}, capacities={"BY": 1000.0})
     np.testing.assert_array_equal(out["BY"], np.zeros(4))

@@ -36,7 +36,9 @@ def _cache_key(url: str) -> str:
     return f"{stem}-{digest}{suffix}"
 
 
-def download(url: str, namespace: str, *, force: bool = False, timeout: int = DEFAULT_TIMEOUT) -> Path:
+def download(
+    url: str, namespace: str, *, force: bool = False, timeout: int = DEFAULT_TIMEOUT
+) -> Path:
     """Download ``url`` to the namespaced cache. Return the local path."""
     target = cache_dir(namespace) / _cache_key(url)
     if target.exists() and not force:
@@ -47,14 +49,17 @@ def download(url: str, namespace: str, *, force: bool = False, timeout: int = DE
     with requests.get(url, stream=True, timeout=timeout) as response:
         response.raise_for_status()
         total = int(response.headers.get("Content-Length", 0)) or None
-        with tempfile.NamedTemporaryFile(delete=False, dir=target.parent) as tmp, tqdm(
-            total=total,
-            unit="B",
-            unit_scale=True,
-            unit_divisor=1024,
-            desc=target.name,
-            leave=False,
-        ) as bar:
+        with (
+            tempfile.NamedTemporaryFile(delete=False, dir=target.parent) as tmp,
+            tqdm(
+                total=total,
+                unit="B",
+                unit_scale=True,
+                unit_divisor=1024,
+                desc=target.name,
+                leave=False,
+            ) as bar,
+        ):
             tmp_path = Path(tmp.name)
             try:
                 for chunk in response.iter_content(chunk_size=CHUNK_SIZE):

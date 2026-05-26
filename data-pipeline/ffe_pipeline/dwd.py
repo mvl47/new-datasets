@@ -193,9 +193,7 @@ def write_weather(payload: dict, target: Path) -> None:
 def run_weather(*, force: bool = False) -> Path:
     boundaries_path = output_dir() / "bundeslaender.geojson"
     if not boundaries_path.exists():
-        raise FileNotFoundError(
-            f"missing {boundaries_path} — run `make boundaries` first."
-        )
+        raise FileNotFoundError(f"missing {boundaries_path} — run `make boundaries` first.")
     polygons = load_bundesland_polygons(boundaries_path)
 
     stations_file = download(STATIONS_URL, namespace="dwd", force=force)

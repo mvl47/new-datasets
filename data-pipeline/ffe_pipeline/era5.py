@@ -117,7 +117,9 @@ def wind_speed(u: np.ndarray, v: np.ndarray) -> np.ndarray:
     return np.sqrt(u**2 + v**2)
 
 
-def wind_power_curve(speed_ms: np.ndarray, *, cut_in: float = 3.0, rated: float = 12.0, cut_out: float = 25.0) -> np.ndarray:
+def wind_power_curve(
+    speed_ms: np.ndarray, *, cut_in: float = 3.0, rated: float = 12.0, cut_out: float = 25.0
+) -> np.ndarray:
     """Capacity factor 0..1 from instantaneous wind speed.
 
     Mirrors the JS model in apps/web — cubic ramp between cut-in and
@@ -162,7 +164,9 @@ def to_timeseries_payload(series_mw: Mapping[str, np.ndarray], national_mw: np.n
     """
     return {
         "hoursInYear": int(national_mw.shape[0]),
-        "byBundesland": {code: [round(float(v), 1) for v in arr] for code, arr in series_mw.items()},
+        "byBundesland": {
+            code: [round(float(v), 1) for v in arr] for code, arr in series_mw.items()
+        },
         "national": [round(float(v), 1) for v in national_mw],
     }
 
